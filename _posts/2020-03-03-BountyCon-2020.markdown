@@ -119,7 +119,7 @@ This means that we can control local_38 and local_30.
 Now, the Solution is pretty straight forward. Enter some garbage data of 128 characters + MD5 hash of it. So,128 + 16(MD5 hash) = 144. The program will compute the MD5 hash of the first 128 characters and will compare it with the next 16 characters(local_38 and local_30) which were overwritten by us.
 
 Below is the script that i used.
-```
+```python
 #!/usr/bin/env python2
 from pwn import *
 r = remote('ec2-3-11-37-224.eu-west-2.compute.amazonaws.com', 10000)
