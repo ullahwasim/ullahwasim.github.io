@@ -17,6 +17,9 @@ secure_login.tar.gz
 ```
 
 
+[Link to the file](/files/secure_login.tar.gz)
+
+
 Starting from the first challange which had a description stated above.
 As server `ec2-3-11-37-224.eu-west-2.compute.amazonaws.com` is listening, we have to connect it using `nc ec2-3-11-37-224.eu-west-2.compute.amazonaws.com 10000` command. On connecting, it prompts for the password which we don’t know and somehow, we have to bypass it to get the flag.
 
@@ -158,6 +161,8 @@ shake_it.tar.gz
 ```
 
 
+[Link to the file](/files/shake_it.tar.gz)
+
 
 After extracting the file, there was an apk file in it. I quickly installed that apk file to my mobile and a screen like below opened.
 
@@ -243,6 +248,10 @@ Note: ensure you grant the app camera permissions.
 lighthouse.tar.gz
 ```
 
+
+[Link to the file](/files/lighthouse.tar.gz)
+
+
 After extracting the file, there was an apk file in it. On installing that apk file to my mobile there was a screen with a single button. When I pressed the button flash started to turn on and off.
 
 
@@ -285,6 +294,10 @@ What do you mean a debugger is already attached?
 
 anti_what.tar.gz
 ```
+
+
+[Link to the file](/files/anti_what.tar.gz)
+
 
 Running the file will print `Press any key to quit`
 I used Ghidra to decompile the file. After opening the file with Ghidra and decompiling ASM to C code. Main Function looked something like this
@@ -414,6 +427,10 @@ This is just a warm up.
 ghidra_is_cool.tar.gz
 ```
 
+
+[Link to the file](/files/ghidra_is_cool.tar.gz)
+
+
 It was the simplest one I guess. After extracting the file and running the file it printed nothing.
 `strings ghidra_is_cool`
 shows string `patch me!` in the file
@@ -457,6 +474,9 @@ Note: the flag format for this challenge is bountycon-...
 
 meggenser.tar.gz
 ```
+
+[Link to the file](/files/meggenser.tar.gz)
+
 
 After extracting the file and running the apk file. The following screen containing emoji opened. It had nothing just emoji to send and delete the message.
 
@@ -555,7 +575,7 @@ Checking the source code I didn't find anything special except `cookie.php`.
 
 
 
-let's understand the verify_cookie function.
+Let's understand the verify_cookie function.
 
 
 Cookie value passed to function as the cookie variable. Then cookie string is reversed using strrev($cookie) after then it is decoded by base64 and stored to `$cd`.
@@ -924,8 +944,6 @@ if __name__ == '__main__':
 Ever wanted to share 20 KiB of text (or less) with a friend but just couldn't? Enter Glue.bar, the original text-sharing application!
 
 https://www.glue.bar/
-
-
 ```
 
 You can check how the website looks like by opening it. From the website, it looks like a flag is stored in glue and we have to found that glue id.
@@ -1095,7 +1113,6 @@ Tried `3` for id parameter and got the flag. saying `Have yourself a flag`
 
 ```	
 https://ik6939fg0f.execute-api.eu-west-2.amazonaws.com/default/qx9nc2
-
 ```
 
 On opening the website it looked like
@@ -1137,8 +1154,10 @@ Time's ticking, hack me before it's too late.
 https://mk3pxi9jwe.execute-api.eu-west-2.amazonaws.com/default/s2vx5m
 
 tick_tock.tar.gz
-
 ```
+
+[Link to the file](/files/tick_tock.tar.gz)
+
 
 In the challenge, a file was given to us which was like
 
@@ -1313,7 +1332,6 @@ exploit
 # Who's Sequel?
 ```
 https://pr28v5drz5.execute-api.eu-west-2.amazonaws.com/default/n9h9me
-
 ```
 
 As the title itself gave us the hint that it is vulnerable to SQLi injection.

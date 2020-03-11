@@ -53,8 +53,10 @@
 
 nc ec2-3-11-37-224.eu-west-2.compute.amazonaws.com 10000
 
-<a href="/files/secure_login.tar.gz">secure_login.tar.gz</a>
+secure_login.tar.gz
 </code></pre></div></div>
+
+<p><a href="/files/secure_login.tar.gz">Link to the file</a></p>
 
 <p>Starting from the first challange which had a description stated above.
 As server <code class="highlighter-rouge">ec2-3-11-37-224.eu-west-2.compute.amazonaws.com</code> is listening, we have to connect it using <code class="highlighter-rouge">nc ec2-3-11-37-224.eu-west-2.compute.amazonaws.com 10000</code> command. On connecting, it prompts for the password which we don’t know and somehow, we have to bypass it to get the flag.</p>
@@ -184,8 +186,11 @@ Now, the Solution is pretty straight forward. Enter some garbage data of 128 cha
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The best way to get fit - just shake it!
 
-<a href="/files/shake_it.tar.gz">shake_it.tar.gz</a>
+
+shake_it.tar.gz
 </code></pre></div></div>
+
+<p><a href="/files/shake_it.tar.gz">Link to the file</a></p>
 
 <p>After extracting the file, there was an apk file in it. I quickly installed that apk file to my mobile and a screen like below opened.</p>
 
@@ -259,8 +264,10 @@ I decompiled file using apktool <code class="highlighter-rouge">apktool -d "shak
 
 Note: ensure you grant the app camera permissions.
 
-<a href="/files/lighthouse.tar.gz">lighthouse.tar.gz</a>
+lighthouse.tar.gz
 </code></pre></div></div>
+
+<p><a href="/files/lighthouse.tar.gz">Link to the file</a></p>
 
 <p>After extracting the file, there was an apk file in it. On installing that apk file to my mobile there was a screen with a single button. When I pressed the button flash started to turn on and off.</p>
 
@@ -293,8 +300,11 @@ From the code what I understood was that the code was containing the morse codes
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>What do you mean a debugger is already attached?
 
-<a href="/files/anti_what.tar.gz">anti_what.tar.gz</a>
+
+anti_what.tar.gz
 </code></pre></div></div>
+
+<p><a href="/files/anti_what.tar.gz">Link to the file</a></p>
 
 <p>Running the file will print <code class="highlighter-rouge">Press any key to quit</code>
 I used Ghidra to decompile the file. After opening the file with Ghidra and decompiling ASM to C code. Main Function looked something like this</p>
@@ -406,8 +416,11 @@ x/s $rdx
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This is just a warm up.
 
-<a href="/files/ghidra_is_cool.tar.gz">ghidra_is_cool.tar.gz</a>
+
+ghidra_is_cool.tar.gz
 </code></pre></div></div>
+
+<p><a href="/files/ghidra_is_cool.tar.gz">Link to the file</a></p>
 
 <p>It was the simplest one I guess. After extracting the file and running the file it printed nothing.
 <code class="highlighter-rouge">strings ghidra_is_cool</code>
@@ -441,8 +454,11 @@ exit
 Note: the flag format for this challenge is bountycon-...
 
 
-<a href="/files/meggenser.tar.gz">meggenser.tar.gz</a>
+
+meggenser.tar.gz
 </code></pre></div></div>
+
+<p><a href="/files/meggenser.tar.gz">Link to the file</a></p>
 
 <p>After extracting the file and running the apk file. The following screen containing emoji opened. It had nothing just emoji to send and delete the message.</p>
 
@@ -498,9 +514,7 @@ c
 
 <p>Demo:</p>
 
-<iframe width="720" height="315"
-src="https://www.youtube.com/embed/sdamfI_cIwI">
-</iframe>
+<p><a href="https://youtu.be/sdamfI_cIwI"><img src="https://i.imgur.com/vKb2F1B.png" alt="Watch the video" /></a></p>
 
 <p><br /></p>
 
@@ -533,7 +547,7 @@ Checking the source code I didn’t find anything special except <code class="hi
 
 <p><img src="/images/Screenshot_7.png" alt="" class="img-responsive" /></p>
 
-<p>let’s understand the verify_cookie function.</p>
+<p>Let’s understand the verify_cookie function.</p>
 
 <p>Cookie value passed to function as the cookie variable. Then cookie string is reversed using strrev($cookie) after then it is decoded by base64 and stored to <code class="highlighter-rouge">$cd</code>.</p>
 
@@ -770,9 +784,7 @@ To get the flag, we have to hold the condition <code class="highlighter-rouge">B
 
 <p>See the below video for better understanding.</p>
 
-<iframe width="720" height="315"
-src="https://www.youtube.com/embed/be47m9LKT0o">
-</iframe>
+<p><a href="https://youtu.be/be47m9LKT0o"><img src="https://i.imgur.com/vKb2F1B.png" alt="Watch the video" /></a></p>
 
 <p><br /></p>
 
@@ -876,8 +888,6 @@ SyntaxError: Missing parentheses in call to 'print'. Did you mean print(ptext)?
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Ever wanted to share 20 KiB of text (or less) with a friend but just couldn't? Enter Glue.bar, the original text-sharing application!
 
 https://www.glue.bar/
-
-
 </code></pre></div></div>
 
 <p>You can check how the website looks like by opening it. From the website, it looks like a flag is stored in glue and we have to found that glue id.</p>
@@ -1040,7 +1050,6 @@ Tried <code class="highlighter-rouge">3</code> for id parameter and got the flag
 <h1 id="i-dont-play">I Don’t Play</h1>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://ik6939fg0f.execute-api.eu-west-2.amazonaws.com/default/qx9nc2
-
 </code></pre></div></div>
 
 <p>On opening the website it looked like</p>
@@ -1078,8 +1087,10 @@ Tried <code class="highlighter-rouge">3</code> for id parameter and got the flag
 
 https://mk3pxi9jwe.execute-api.eu-west-2.amazonaws.com/default/s2vx5m
 
-<a href="/files/tick_tock.tar.gz">tick_tock.tar.gz</a>
+tick_tock.tar.gz
 </code></pre></div></div>
+
+<p><a href="/files/tick_tock.tar.gz">Link to the file</a></p>
 
 <p>In the challenge, a file was given to us which was like</p>
 
@@ -1244,7 +1255,6 @@ exploit
 
 <h1 id="whos-sequel">Who’s Sequel?</h1>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://pr28v5drz5.execute-api.eu-west-2.amazonaws.com/default/n9h9me
-
 </code></pre></div></div>
 
 <p>As the title itself gave us the hint that it is vulnerable to SQLi injection.</p>
