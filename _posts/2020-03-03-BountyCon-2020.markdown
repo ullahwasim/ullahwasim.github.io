@@ -91,7 +91,7 @@ void check_passwd(int param_1)
 ```
 The line `sVar2 = read(param_1,&local_b8,0x90);` is reading 144 characters from the user and saving it to local_b8.
 Line `MD5((uchar *)&local_b8,0x80,local_28);` doing MD5 of 128 characters taken from user and saving to local_28.
-Line `iVar1 = memcmp(local_28,&local_38,0x10);`  comparing 0x10(16 in decimal) bytes of two blocks local_28 and local_38(as local_38 is of only 8 bytes, the value of local_30 will also be compared) of memory.Both local_38 and local_30 are defined in the code with precomputed MD5. 
+Line `iVar1 = memcmp(local_28,&local_38,0x10);`  comparing 0x10(16 in decimal) bytes of two blocks local_28 and local_38(as local_38 is of only 8 bytes, the value of local_30 will also be compared) of memory. Both local_38 and local_30 are defined in the code with precomputed MD5. 
 If the comparison is true it will print the flag. As MD5 is a one-way function, it is difficult to know the input.
 
 As local_b8 is of 8 bytes, BufferOverflow will happen when users write password of 144 characters and it will overwrite all the  variables till local_30 variable.
