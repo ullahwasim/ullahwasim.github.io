@@ -460,14 +460,13 @@ meggenser.tar.gz
 ```
 
 After extracting the file and running the apk file. The following screen containing emoji opened. It had nothing just emoji to send and delete the message.
-So, I analyzed the apk with gdb ,apktool, and Jadx.
 
 ![](/images/Screenshot_6.png){:class="img-responsive"}
 
 
 Pressing any emoji text will appear as something like ":abc-abc-abc:". Flag format for this challenge is bountycon-... as given in the details of the task. The flag should be like ":bountycon-abc-abc:" and text will convert to some sort of emoji.
 
-After checking the JAVA code of apk file. There was nonthing interesting in the apk file. Everything was done in `libparse.so` file. So, I started to debug it.
+After checking the JAVA code(decompiled using Jadx) of apk file. There was nonthing interesting in the apk file. Everything was done in `libparse.so` file. So, I started to debug it.
 
 After analyzing it a lot with GDB,apktool, and Jadx, I came to a situation where each character of an entered text going to a specific if condition. When a character is right if the condition will get true else not.
 
