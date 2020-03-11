@@ -18,7 +18,6 @@ secure_login.tar.gz
 
 
 Starting from the first challange which had a description stated above.
-
 As server `ec2-3-11-37-224.eu-west-2.compute.amazonaws.com` is listening, we have to connect it using `nc ec2-3-11-37-224.eu-west-2.compute.amazonaws.com 10000` command. On connecting, it prompts for the password which we don’t know and somehow, we have to bypass it to get the flag.
 
 
@@ -206,7 +205,7 @@ In the mainactivity class, I found the following code:
         }
     }
 ```
-if we change the `if` condition in `if (this.shakes < 10000000)` then we can have our flag. For this, I used apktool to patch the file.
+If we change the `if` condition in `if (this.shakes < 10000000)` then we can have our flag. For this, I used apktool to patch the file.
 I decompiled file using apktool `apktool -d "shake_it.apk` and in the `shake_it/smali/com/example/myapplication/MainActivity.smali`, I changed the if condition by changing `if-gez v7, :cond_0` to `if-lez v7, :cond_0`
 
 ![](/images/Screenshot_2.png){:class="img-responsive"}
@@ -340,7 +339,7 @@ undefined8 main(undefined8 param_1,char **param_2)
 ```
 
 `RC4_set_key((RC4_KEY *)local_118,0x32,key);` was getting the key for RC4.
-`RC4((RC4_KEY *)local_118,0x4e,ptext,ptext);` was decrypting the ptext using RC4
+`RC4((RC4_KEY *)local_118,0x4e,ptext,ptext);` was decrypting the ptext using RC4.
 
 
 
