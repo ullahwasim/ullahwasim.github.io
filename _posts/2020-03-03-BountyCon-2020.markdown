@@ -1277,7 +1277,7 @@ def lambda_handler(event, context):
     print("----------------------------------------------------------------------------------------")
     epoch = Epoch('123')
     cookie2=base64.b64encode(pickle.dumps(epoch))
-    print('Here's your payload: '+str(cookie2))
+    print("Here's your payload: "+str(cookie2))
     return {
         'statusCode': 200,
         'body': json.dumps('Hello from Lambda!')
