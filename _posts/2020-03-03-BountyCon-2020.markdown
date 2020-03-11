@@ -649,7 +649,7 @@ def perform_hlext(tag, orig_msg, append_msg, keylen):
     conn.request("GET", "/ui/?tools-flagship","", headers)
     response = conn.getresponse()
     data=str(response.read())
-    print(data)
+#    print(data)
     if "sql" in data or "SQL" in data or "Sql" in data or "Error" in data or "error" in data or "ERROR" in data or "Failed" in data or "failed" in data:
         print(data)
 
