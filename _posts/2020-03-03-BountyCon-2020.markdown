@@ -820,7 +820,7 @@ y#*/
 ```
 This loop run over on each characters of input text.
 
-On the console, Enter `P(BountyCon{"asdsad"})`
+On the console, Enter `P("BountyCon{asdsad}")`
 
 ```
 D^=B[24][2 + (d++ % 31)] ^ 32
