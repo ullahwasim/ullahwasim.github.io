@@ -708,7 +708,7 @@ But after trying too much to crack the password(I tried too many tools) this met
 
 The next day, I tried the same way but making things similar to `glue.bar` server e.g using Ubuntu server on AWS instead of a local kali Linux machine.
 
-And this works on AWS with Ubuntu. Same method wasn't work on local kali Linux machine because you have to zip the plaintext file to crack password and zip program of ubuntu and kali wasn't same(there is same difference). Protected files was zipped on Ubuntu.
+And this works on AWS with Ubuntu. Same method wasn't work on local kali Linux machine because you have to zip the plaintext file to crack password and zip program of ubuntu and kali wasn't same(there is some difference). Protected files was zipped on Ubuntu.
 
 On Ubuntu, I used `https://github.com/keyunluo/pkcrack` tool to get the password protected files.
 ```
