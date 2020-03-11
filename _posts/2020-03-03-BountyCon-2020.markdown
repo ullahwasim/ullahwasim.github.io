@@ -6,7 +6,7 @@ categories: blog
 ---
 This year Facebook/Google hosted BountyCon Capture the Flag competition. I participated in it and solved 15 of 17 challenges (except Proof of game and aglet). As I'm currently an undergraduate student and in the learning stage, my solutions will not be optimal. Although I didn't get selected as a winner, still it was pretty fun and engaging to solve all of these challenges.
 
-Before coming to the right solutions to the challenges. I tried a lot of different ways to solve the challenges. Below are the solutions that I used to solve the challenges.
+Before coming to the right solution to the challenges. I tried a lot of different ways to solve the challenges. Below are the solutions that I used to solve the challenges.
 # Secure Login
 ```
 We developed a super secure login system, but unfortunately, we aren't familiar with those newfangled memory-safe languages.
@@ -17,7 +17,7 @@ secure_login.tar.gz
 ```
 
 
-Starting from the 1st Challange which had a description stated above.
+Starting from the first challange which had a description stated above.
 
 As server `ec2-3-11-37-224.eu-west-2.compute.amazonaws.com` is listening, we have to connect it using `nc ec2-3-11-37-224.eu-west-2.compute.amazonaws.com 10000` command. On connecting, it prompts for the password which we don’t know and somehow, we have to bypass it to get the flag.
 
@@ -90,8 +90,8 @@ void check_passwd(int param_1)
 
 ```
 The line `sVar2 = read(param_1,&local_b8,0x90);` is reading 144 characters from the user and saving it to local_b8.
-line `MD5((uchar *)&local_b8,0x80,local_28);` doing MD5 of 128 characters taken from user and saving to local_28.
-line `iVar1 = memcmp(local_28,&local_38,0x10);`  comparing 0x10(16 in decimal) bytes of two blocks local_28 and local_38(as local_38 is of only 8 bytes, the value of local_30 will also be compared) of memory.Both local_38 and local_30 are defined in the code with precomputed md5. 
+Line `MD5((uchar *)&local_b8,0x80,local_28);` doing MD5 of 128 characters taken from user and saving to local_28.
+Line `iVar1 = memcmp(local_28,&local_38,0x10);`  comparing 0x10(16 in decimal) bytes of two blocks local_28 and local_38(as local_38 is of only 8 bytes, the value of local_30 will also be compared) of memory.Both local_38 and local_30 are defined in the code with precomputed MD5. 
 If the comparison is true it will print the flag. As MD5 is a one-way function, it is difficult to know the input.
 
 As local_b8 is of 8 bytes, BufferOverflow will happen when users write password of 144 characters and it will overwrite all the  variables till local_30 variable.
@@ -160,7 +160,7 @@ shake_it.tar.gz
 
 
 
-After extracting the file, there was an apk file in it. I quickly installed that apk file to my mobile. and a screen like below opened.
+After extracting the file, there was an apk file in it. I quickly installed that apk file to my mobile and a screen like below opened.
 
 
 
@@ -169,7 +169,7 @@ After extracting the file, there was an apk file in it. I quickly installed that
 
 
 It said `Start shaking`
-So when I shook it, the text changed to `999999 Shakes to go` which meant we have to shake it `999999` times to get the flag. Since this number is too huge, we have to patch the apk file. Here, I decompiled the apk file using `Jadx` to view the java code. The flag wasn't in the apk file, it was stored in an encrypted form in the `native-lib.so` file.
+so when I shook it, the text changed to `999999 Shakes to go` which meant we have to shake it `999999` times to get the flag. Since this number is too huge, we have to patch the apk file. Here, I decompiled the apk file using `Jadx` to view the java code. The flag wasn't in the apk file, it was stored in an encrypted form in the `native-lib.so` file.
 In the mainactivity class, I found the following code:
 ```java
     public void onSensorChanged(SensorEvent sensorEvent) {
@@ -213,11 +213,11 @@ I decompiled file using apktool `apktool -d "shake_it.apk` and in the `shake_it/
 
 ![](/images/Untitled.png){:class="img-responsive"}
 
-Build the apk file again using `apktool b "shake_it" -o "shake_it1.apk"`.If you install a newly created apk file you will get a certificate error. So we have to sign the apk file. For this, First, create a key using keytool `keytool -v -genkey -keystore shake_it1.keystore -alias shake_it1 -keyalg RSA -keysize 1024 -sigalg SHA1withRSA -validity 356`. Enter anything in the fields
+Build the apk file again using `apktool b "shake_it" -o "shake_it1.apk"`.If you install a newly created apk file you will get a certificate error. So we have to sign the apk file. For this, create a key using keytool `keytool -v -genkey -keystore shake_it1.keystore -alias shake_it1 -keyalg RSA -keysize 1024 -sigalg SHA1withRSA -validity 356`. Enter anything in the fields.
 
 ![](/images/Screenshot_34.png){:class="img-responsive"}
 
-then, Sign the application using jarsigner `jarsigner -keystore shake_it1.keystore -sigalg SHA1withRSA -digestalg SHA1 shake_it1.apk shake_it1`
+then, sign the application using jarsigner `jarsigner -keystore shake_it1.keystore -sigalg SHA1withRSA -digestalg SHA1 shake_it1.apk shake_it1`
 
 ![](/images/Screenshot_35.png){:class="img-responsive"}
 
@@ -251,17 +251,17 @@ I decompiled the apk file using `Jadx` to view the java code.
 From the code what I understood was that the code was containing the morse codes map to alpha codes. On each character of morse code (".", "-" , " ") flash will be turned off or on for some time defined in the code, and from the flash, you have to get the morse code and from the morse code you have to get the alpha character which will make the flag, but the flash was turning off and on too quickly that a human can't handle it.
 
 
-After analyzing a bit further I realized that the flag was encrypted in the same form and in the same file(libnative-lib.so) as in "Shake It" Challenge. So, I replaced the "libnative-lib.so" of lighthouse to shake it "libnative-lib.so" file, then an installed apk file and shake it to get the file.
+After analyzing a bit further I realized that the flag was encrypted in the same form and in the same file(libnative-lib.so) as in "Shake It" challenge. So, I replaced the "libnative-lib.so" of lighthouse to shake it "libnative-lib.so" file, then an installed apk file and shake it to get the file.
 
 
-I decompiled file using apktool `apktool -d "shake_it.apk` and `apktool -d "lighthouse.apk`. In the `shake_it/lib/` replace all the files/folders including `libnative-lib.so` with `lighthouse/lib/` files of lighthouse.(Just simply copy all folder of `lighthouse/lib/` and paste them to `shake_it/lib/`)
+I decompiled file using apktool `apktool -d "shake_it.apk` and `apktool -d "lighthouse.apk`. In the `shake_it/lib/` replace all the files/folders including `libnative-lib.so` with `lighthouse/lib/` files of lighthouse(just simply copy all folder of `lighthouse/lib/` and paste them to `shake_it/lib/`).
 
 
 Build the apk file again using `apktool b "shake_it" -o "shake_it1.apk"`.If you install a newly created apk file you will get a certificate error. Hence, sign the apk file. For this run; first, create a key using keytool `keytool -v -genkey -keystore shake_it1.keystore -alias shake_it1 -keyalg RSA -keysize 1024 -sigalg SHA1withRSA -validity 356`. Enter anything in the fields.
 
 ![](/images/Screenshot_34.png){:class="img-responsive"}
 
-then, Sign the application using jarsigner `jarsigner -keystore shake_it1.keystore -sigalg SHA1withRSA -digestalg SHA1 shake_it1.apk shake_it1`
+then, sign the application using jarsigner `jarsigner -keystore shake_it1.keystore -sigalg SHA1withRSA -digestalg SHA1 shake_it1.apk shake_it1`
 
 ![](/images/Screenshot_35.png){:class="img-responsive"}
 
@@ -358,8 +358,7 @@ void runPayload(void)
   return;
 }
 ```
-line `(*(code *)puVar1)(); ` looks strange. Here it is calling some method
-, so lets check what it is calling.
+Line `(*(code *)puVar1)();` looks strange. Here it is calling some method, so lets check what it is calling.
 
 `lVar2 = ptrace(PTRACE_TRACEME,0,1,0);` of main function checking if debugger is attached or not.
 So, Running the file with the debugger attached will delete the file. For this, we have to patch the file. I did it using `radare2`
@@ -369,7 +368,7 @@ s 0x158f // Address on which we want to change the instruction
 wa jmp 0x15a8 //change je to jmp
 quit 
 ```
-use `objdump anti_what -d` to check if changes are made or not. Look at 0x158f address
+Use `objdump anti_what -d` to check if changes are made or not. Look at 0x158f address
 
 ![](/images/Untitled1.png){:class="img-responsive"}
 
@@ -378,7 +377,7 @@ use `objdump anti_what -d` to check if changes are made or not. Look at 0x158f a
 
 
 
-now,
+Now,
 ```
 gdb ./anti_what
 break runPayload // to check what's going on runPayload
@@ -386,7 +385,7 @@ r
 disas
 ```
 
-set breakpoint after line "call *%rdx".In my case it is.
+Set breakpoint after line "call *%rdx". In my case it is `0x0000555555555554f1`
 
 ```
 break *0x0000555555555554f1
@@ -424,8 +423,8 @@ I used Ghidra to decompile the file. Code looked like this
 ![](/images/Screenshot_5.png){:class="img-responsive"}
 
 
-address 0x00401063 contains `SYSCALL` (looks interesting).
-I patch the file by changing program to jmp 0x0040101a
+Address 0x00401063 contains `SYSCALL` (looks interesting).
+I patch the file by changing program to jmp at 0x0040101a so that SYSCALL get executed.
 ```
 r2 -w ./ghidra_is_cool
 s 0x401000
@@ -460,21 +459,21 @@ Note: the flag format for this challenge is bountycon-...
 meggenser.tar.gz
 ```
 
-After extracting the file and running the apk file. the following screen containing emoji opened. It had nothing just emoji to send and delete the message.
+After extracting the file and running the apk file. The following screen containing emoji opened. It had nothing just emoji to send and delete the message.
 So, I analyzed the apk with gdb ,apktool, and Jadx.
 
 ![](/images/Screenshot_6.png){:class="img-responsive"}
 
 
-Pressing any emoji text will appear as something like ":abc-abc-abc:". Flag format for this challenge is bountycon-... as given in the details of the task. so the flag should be like ":bountycon-abc-abc:" and text will convert to some sort of emoji.
+Pressing any emoji text will appear as something like ":abc-abc-abc:". Flag format for this challenge is bountycon-... as given in the details of the task. The flag should be like ":bountycon-abc-abc:" and text will convert to some sort of emoji.
 
 After checking the JAVA code of apk file. There was nonthing interesting in the apk file. Everything was done in `libparse.so` file. So, I started to debug it.
 
 After analyzing it a lot with GDB,apktool, and Jadx, I came to a situation where each character of an entered text going to a specific if condition. When a character is right if the condition will get true else not.
 
-so I just bruteforce the flag by holding the if condition.
+So, I just bruteforce the flag by holding the if condition.
 
-In function `Java_com_facebook_bountycon2020_app_Emojifier_parse`.there is one if condition like below
+In function `Java_com_facebook_bountycon2020_app_Emojifier_parse`. There is one if condition like below
 ```
 if (((cVar3 != '-') &&
   (((local_3c = (char *)0xffffffa0, 0x19 < (byte)(cVar3 + 0x9fU) &&
@@ -483,9 +482,9 @@ if (((cVar3 != '-') &&
  (piVar11 = (int *)piVar11[(int)(pcVar7 + 1)], piVar11 == (int *)0x0)) goto LAB_00010c33;
 
 ```
-whatever you enter the right character of the flag.Above if the condition will be true.
+Whatever you enter the right character of the flag. Above if the condition will be true.
 
-Install the apk file by `adb install meggenser.apk`.I used genymotion for the emulator.
+Install the apk file by `adb install meggenser.apk`. I used genymotion for the emulator.
 
 Connect meggenser app to gdb to debug it.
 
@@ -500,16 +499,16 @@ break Java_com_facebook_bountycon2020_app_Emojifier_parse
 c
 # Enter any input from app.
 disas
-#place breakpoint anywhere in the if condition.In my case,it is address 0xe39alccf
+#Place breakpoint anywhere in the if condition. In my case, it is address 0xe39alccf
 break *0xe39alccf
-del 1 # to delete the first breakpoint.
+del 1 # To delete the first breakpoint.
 # Enter :bountycon-a: as flag for this challenge starts with bountycon-...
-c 10 # length of "bountycon-" is 10 if message prints on the app then a is wrong guess.
+c 10 # length of "bountycon-" is 10 if message prints on the app then it is a wrong guess.
 # Enter :bountycon-3:
-c 10 # gdb will be on breakpoint under the if condition as input is correct so 3 is the right input towards the flag.
+c 10 # gdb will be on breakpoint under the if condition as input is correct so "3" is the right input for the the flag.
 c
 # Enter :bountycon-3a: as flag for this challenge starts with bountycon-...
-c 11 # length of "bountycon-3" is 11 if message prints on the app then a is wrong guess.
+c 11 # length of "bountycon-3" is 11 if message prints on the app then it is a wrong guess.
 # Enter :bountycon-3m:
 c 11 # gdb will be on breakpoint under the if condition as input is correct
 c
@@ -561,16 +560,16 @@ Checking the source code I didn't find anything special except `cookie.php`.
 let's understand the verify_cookie function.
 
 
-cookie value passed to function as the cookie variable. Then cookie string is reversed using strrev($cookie) after then it is decoded by base64 and stored to `$cd`.
+Cookie value passed to function as the cookie variable. Then cookie string is reversed using strrev($cookie) after then it is decoded by base64 and stored to `$cd`.
 
 
-if string($cd) is <= 32 return false else last 32 character of `$cd` contains hash and remaining contains `data(email)`.MD5 hash of $secret_cookie_key concatenated with email(`MD5($secret_cookie_key+Email)`) is stored to $rhash.
+If string($cd) is <= 32 return false else last 32 character of `$cd` contains hash and remaining contains `data(email)`.MD5 hash of $secret_cookie_key concatenated with email(`MD5($secret_cookie_key+Email)`) is stored to $rhash.
 
 
-then a check is performed if the hash is the same or something has changed with MD5 hash.
+Then a check is performed if the hash is the same or something has changed with MD5 hash.
 
 
-if hash is same then email is put on SQL query and SQL query is executed to get the user and return it. 
+If hash is same then email is placed on SQL query and SQL query is executed to get the user and return it. 
 
 
 There are two things to note.
@@ -578,13 +577,13 @@ There are two things to note.
 
 1- Secret key concatenate with user email then MD5 is done.
 
-2- SQL query is vulnerable to SQL injection.
+2- SQL query is vulnerable to SQL Injection.
 
-After googling, I came to know that if the secret key is combined with a user-controlled message then it is vulnerable to a length extension attack. this means the attacker can make a valid hash of secret_cookie_key+new_message without knowing the secret_cookie_key(length of secret_cookie_key needed to be known which is not a big deal, we can try all lengths).
+After googling, I came to know that if the secret key is combined with a user-controlled message then it is vulnerable to a length extension attack. This means the attacker can make a valid hash of secret_cookie_key+new_message without knowing the secret_cookie_key(length of secret_cookie_key needed to be known which is not a big deal, we can try all lengths).
 
 Algorithms like MD5, SHA-1, and SHA-2 that are based on the Merkle–Damgård construction are susceptible to this kind of attack.
 
-So, the idea was to make a valid hash of message with SQL injection(secret_cookie_key+new_message where new_message is containing `" or 'role'="admin"-- -` in the last) to log in as admin by doing SQLi injection.
+So, the idea was to make a valid hash of message with SQL Injection(secret_cookie_key+new_message where new_message is containing `" or 'role'="admin"-- -` in the end) to log in as admin by doing SQL Injection.
 
 The key length was 56.
 
@@ -667,33 +666,33 @@ Website looks like
 ![](/images/Screenshot_9.png){:class="img-responsive"}
 
 From the page description, it looks like the demo URL was there before it was removed. I decided to look at its archive page. 
-So, I Opened the `https://web.archive.org/` and search for `https://www.glue.bar/mattsstringreverser/` 
+So, I opened the `https://web.archive.org/` and search for `https://www.glue.bar/mattsstringreverser/` 
 there was the three snapshot of this page. From which one is `https://web.archive.org/web/20191231221341/https://www.glue.bar/mattsstringreverser/`
 which contains the link to the software
 
-After downloading the zip file and extracting it.it contains demo and index.php file in it which looks like.
+After downloading the zip file and extracting it. It contains demo and index.php file in it which looks like.
 
 ![](/images/Screenshot_10.png){:class="img-responsive"}
 
-as you see there is a string in a reversed order which is `https://www.glue.bar/mattsstringreverser/matt-himself.jpg`
+As you see there is a string in a reversed order which is `https://www.glue.bar/mattsstringreverser/matt-himself.jpg`
 
 Running the command `file matt-himself.jpg` will have an output like
 
 ![](/images/Screenshot_11.png){:class="img-responsive"}
 
-where the description has reverse order string `version2-secret-preview.zip`
+Where the description has reverse order string `version2-secret-preview.zip`
 
-opening `https://www.glue.bar/mattsstringreverser/version2-secret-preview.zip` will download the zip file which contains matt-himself.jpg and index.php file. both files are password protected.
+Opening `https://www.glue.bar/mattsstringreverser/version2-secret-preview.zip` will download the zip file which contains matt-himself.jpg and index.php file. Both files are password protected.
 
-After googling, I came to know that if some plaintext of the zip is known then we can crack the password. In this case, we have plaintext( matt-himself.jpg)
+After googling, I came to know that if some plaintext of the zip is known then we can crack the password. In this case, we have plaintext(matt-himself.jpg)
 
 But after trying too much to crack the password(I tried too many tools) this method did not work.
 
-The next day, I tried the same way but making things similar to `glue.bar` server e.g Ubuntu server on AWS instead of a local kali Linux server.
+The next day, I tried the same way but making things similar to `glue.bar` server e.g using Ubuntu server on AWS instead of a local kali Linux machine.
 
-and this works on AWS with ubuntu.
+And this works on AWS with Ubuntu.
 
-On ubuntu,I used `https://github.com/keyunluo/pkcrack` tool to get the password protected files.
+On Ubuntu, I used `https://github.com/keyunluo/pkcrack` tool to get the password protected files.
 ```
 mkdir matt
 cd matt
@@ -711,7 +710,7 @@ mv ver2/matt-himself.jpg matt-himselfC.jpg
 ![](/images/Screenshot_12.png){:class="img-responsive"}
 
 
-open index.php file from matt-cracked.zip and run it. reverse any string to get the flag.
+Open index.php file from matt-cracked.zip and run it. Reverse any string to get the flag.
 
 ![](/images/Screenshot_13.png){:class="img-responsive"}
 
@@ -730,11 +729,11 @@ We found this ultra secure login form. But where is the code?
 https://178.128.95.74/mr/
 ```
 
-website looks like
+Website looks like
 
 ![](/images/Screenshot_14.png){:class="img-responsive"}
 
-First, just copy the all source code and make a similar website on your local machine. then copy the text in the middle behind the checkbox.
+First, just copy the all source code and make a similar website on your local machine. Then copy the text in the middle behind the checkbox.
 
 ![](/images/Screenshot_15.png){:class="img-responsive"}
 
@@ -742,9 +741,9 @@ Paste javascript code in the index.html file(in the script tag) which you create
 
 ![](/images/Screenshot_16.png){:class="img-responsive"}
 
-Open HTML file in chrome.Open developer tools and in the Source tab.open js file. Click on the pretty print button to Beautify the code.
+Open HTML file in chrome. Open developer tools and in the source tab. Open the html file. Click on the pretty print button to Beautify the code.
 
-Now place breakpoint on `[B[h][H]]&15();`.In my case it is on line 73.
+Now place breakpoint on `[B[h][H]]&15();`. In my case it is on line 73.
 
 ![](/images/Screenshot_36.png){:class="img-responsive"}
 
@@ -803,10 +802,9 @@ y#*/
 ```
 This loop run over on each characters of input text.
 
-On the console,enter `P(BountyCon{"asdsad"})`
+On the console, Enter `P(BountyCon{"asdsad"})`
 
 ```
-B[h][H]
 D^=B[24][2 + (d++ % 31)] ^ 32
 ```
 Where D contains each character of entered text in the loop.
@@ -846,10 +844,10 @@ SyntaxError: Missing parentheses in call to 'print'. Did you mean print(ptext)?
 
 There were three things to know.
 
-On appending the `A` of different length to msg parameter it gives three different messages 
+On appending the `A` of different length to msg parameter it gives three different messages.
 
 ```
-1- bad Base64
+1- Bad Base64
 
 2- Bad request: message padding error 
 
@@ -857,7 +855,7 @@ On appending the `A` of different length to msg parameter it gives three differe
 
 ```
 
-which leads me to padding oracle attack.
+Which leads me to padding oracle attack.
 
 Below is the script that I used to get the flag.
 
@@ -1039,7 +1037,7 @@ else:
 ```
 
 
-It has no information about the API key. Its showing telling us how to use their API.
+It has no information about the API key. It's telling us how to use their API.
 I started finding directories in the starclient.glue.bar and found .git directory.
 On opening `https://starclient.glue.bar/.git/` it giving `403 Forbidden` Error
 
@@ -1097,7 +1095,7 @@ Tried `3` for id parameter and got the flag. saying `Have yourself a flag`
 
 # I Don't Play
 
-```
+```	
 https://ik6939fg0f.execute-api.eu-west-2.amazonaws.com/default/qx9nc2
 
 ```
@@ -1107,23 +1105,23 @@ On opening the website it looked like
 
 ![](/images/Screenshot_26.png){:class="img-responsive"}
 
-Clicking on `login` leads to another website.
+Clicking on `login` redirects to another website.
 
 ![](/images/Screenshot_27.png){:class="img-responsive"}
 
-On checking the source code of the page,it says `<!-- AUTH_TOKEN=url_encode(username;base64(hmac-sha256(username))) -->`
+On checking the source code of the page, it says `<!-- AUTH_TOKEN=url_encode(username;base64(hmac-sha256(username))) -->`
 
 ![](/images/Screenshot_28.png){:class="img-responsive"}
 
-and Clicking on cancel leads us to `https://ik6939fg0f.execute-api.eu-west-2.amazonaws.com/default/qx9nc2?AUTH_TOKEN=%3BFZbocBdRNUdHNe2sYnCX05OsnSbRqtPRscvllzbLTB8%3D`
+Clicking on cancel leads us to `https://ik6939fg0f.execute-api.eu-west-2.amazonaws.com/default/qx9nc2?AUTH_TOKEN=%3BFZbocBdRNUdHNe2sYnCX05OsnSbRqtPRscvllzbLTB8%3D`
 
-URL decode the following `%3BFZbocBdRNUdHNe2sYnCX05OsnSbRqtPRscvllzbLTB8%3D` leads to `;FZbocBdRNUdHNe2sYnCX05OsnSbRqtPRscvllzbLTB8=` before is `;` is username which is empty and then hmac-sha256 is done on username with some password which we dont know.but what if password is weak.lets bruteforce it.
+URL decode the following `%3BFZbocBdRNUdHNe2sYnCX05OsnSbRqtPRscvllzbLTB8%3D` leads to `;FZbocBdRNUdHNe2sYnCX05OsnSbRqtPRscvllzbLTB8=` before `;` is username which is empty and then hmac-sha256 is done on username with some password which we dont know. But what if password is weak. Let's bruteforce it.
 
-I hashcat with `rockyou.txt` file. And found the password which was `ilovefacebook`
+I hashcat with `rockyou.txt` file and found the password which was `ilovefacebook`
 
 ![](/images/Screenshot_29.png){:class="img-responsive"}
 
-I made the hmac-sha256 for `admin` using the password `ilovefacebook` and entered that hash to AUTH_TOKEN e.g `https://ik6939fg0f.execute-api.eu-west-2.amazonaws.com/default/qx9nc2?AUTH_TOKEN=mEE3YZsG%2FlrlYlmdMlK8tqmA8CKWRwTr9%2FNDcipJF4c%3D` which gave us the flag.
+I made the hmac-sha256 for `admin` using the password `ilovefacebook` and entered that hash to AUTH_TOKEN parameter e.g `https://ik6939fg0f.execute-api.eu-west-2.amazonaws.com/default/qx9nc2?AUTH_TOKEN=mEE3YZsG%2FlrlYlmdMlK8tqmA8CKWRwTr9%2FNDcipJF4c%3D` which gave us the flag.
 
 ![](/images/Screenshot_30.png){:class="img-responsive"}
 
@@ -1230,7 +1228,7 @@ def lambda_handler(event, context):
 
 ```
 
-First, File contains the `flag` variable which we want to get it. Second, it using `pickle` which is not secure from object injection.
+First, file contains the `flag` variable which we want to get it. Second, it's using `pickle` which is not secure from object injection.
 
 ![](/images/Screenshot_31.png){:class="img-responsive"}
 
@@ -1238,7 +1236,7 @@ Now, it's doing deserialization on the cookie.
 
 Pickle is vulnerable to deserialization attacks so we can execute arbitrary python code.
 
-I used the below script to get the cookie value to get the flag. I used this script on AWS Lambda. As the target server was running on AWS Lambda. Classes needed to be the same for exploitation.
+I used the below script to get the cookie value to get the flag. I used this script on AWS Lambda. As the target server was running on AWS Lambda, classes needed to be the same for exploitation.
 My solution uses eval to execute a string.
 ```python
 import json
@@ -1275,7 +1273,7 @@ which gave us
 ```
 gANjYnVpbHRpbnMKZXZhbApxAFhvAAAAX19pbXBvcnRfXygnaW5zcGVjdCcpLmN1cnJlbnRmcmFtZSgpLmZfZ2xvYmFsc1snRXBvY2gnXShfX2ltcG9ydF9fKCdpbnNwZWN0JykuY3VycmVudGZyYW1lKCkuZl9nbG9iYWxzWydmbGFnJ10pcQGFcQJScQMu
 ```
-Enter this value to cookie and send request.Flag will be yours.
+Enter this value to cookie and send request. Flag will be yours.
 
 
 <br>
@@ -1326,7 +1324,7 @@ On opening the website it looked something like
 
 ![](/images/Screenshot_33.png){:class="img-responsive"}
 
-On entering `'` in the username and password.it gave us SQL error. then I just used Sqlmap to get the flag.
+On entering `'` in the username and password.it gave us SQL error. Then I just used Sqlmap to get the flag.
 
 
 <br>
