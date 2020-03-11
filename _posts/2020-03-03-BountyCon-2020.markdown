@@ -744,8 +744,6 @@ Paste javascript code in the index.html file(in the script tag) which you create
 
 Open HTML file in chrome.Open developer tools and in the Source tab.open js file. Click on the pretty print button to Beautify the code.
 
-![](/images/Untitled3.png){:class="img-responsive"}
-
 Now place breakpoint on `[B[h][H]]&15();`.In my case it is on line 73.
 
 ![](/images/Screenshot_36.png){:class="img-responsive"}
