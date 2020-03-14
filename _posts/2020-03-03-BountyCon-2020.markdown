@@ -686,9 +686,7 @@ Website looks like
 
 From the page description, it looks like the demo URL was there before it was removed. I decided to look at its archive page. 
 So, I opened the `https://web.archive.org/` and search for `https://www.glue.bar/mattsstringreverser/` 
-there was the three snapshot of this page. 
-
-From which one is `https://web.archive.org/web/20191231221341/https://www.glue.bar/mattsstringreverser/`
+there was the three snapshot of this page. From which one is `https://web.archive.org/web/20191231221341/https://www.glue.bar/mattsstringreverser/`
 which contains the link to the software
 
 After downloading the zip file and extracting it. It contains demo and index.php file in it which looks like.
