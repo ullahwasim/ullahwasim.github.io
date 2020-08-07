@@ -4,7 +4,7 @@ title:  "See recent order items of any Facebook page"
 date:   2020-08-05 21:44:46 -0800
 categories: blog
 ---
-When Page admin adds the "Order Placed" label to the user message, Page admin can also include the details of the order such as item name, notes, image, etc. This bug allow any user to view these order items of any Facebook page. 
+When Page admin adds the "Order Placed" label to the user message, Page admin can also include the details of the order such as item name, notes, image, etc. This bug allow any user to view details of these order items of any Facebook page. 
 <br />
 
 **Proof of concept**
