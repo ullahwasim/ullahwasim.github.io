@@ -7,6 +7,8 @@ categories: blog
 When Page admin adds the "Order Placed" label to the user message, Page admin can also include the details of the order such as item name, notes, image, etc. This bug allow any user to view details of these order items of any Facebook page. 
 <br />
 
+![](/images/fb_order.png)
+
 **Proof of concept**
 
 Send the following request in the browser console by replacing {Page_ID} with the ID of the target page.
