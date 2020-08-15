@@ -537,7 +537,7 @@ c
 
 Demo:
 
-[![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://youtu.be/sdamfI_cIwI)
+[![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://youtu.be/sdamfI_cIwI){:target="_blank"}
 
 <br>
 
@@ -831,7 +831,7 @@ To get the flag, we have to hold the condition `B[h][H]==D` where we can control
 
 See the below video for better understanding.
 
-[![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://youtu.be/be47m9LKT0o)
+[![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://youtu.be/be47m9LKT0o){:target="_blank"}
 
 <br>
 
