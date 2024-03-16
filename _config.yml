@@ -30,13 +30,13 @@ facebook_username: ullahwasim
 linkedin_username: waseem-ullah-siddiqui-531a89175
 
 # Build settings
-theme: minima
-#remote_theme: jekyll/minima
+#theme: minima
+remote_theme: jekyll/minima
 
 plugins:
   - jekyll-feed
   - jekyll-sitemap
-#  - jekyll-remote-theme
+  - jekyll-remote-theme
 
 # Exclude from processing.
 # The following items will not be processed, by default.
